@@ -11,6 +11,7 @@ import InteractionsScreen from '../../screens/Interactions';
 import CalendarScreen from '../../screens/Calendar';
 import AccountsScreen from '../../screens/Accounts';
 import VARIABLES from '../../enums/variables';
+import { Platform } from 'react-native';
 
 
 const MainNavigator = () => {
@@ -22,13 +23,13 @@ const MainNavigator = () => {
             <Tab.Navigator
                 screenOptions={{
                     tabBarStyle: {
-                        height: 75,
+                        height: Platform.OS === "android" ? 75 : 105,
                     },
                     tabBarLabelStyle: {
                         fontFamily: "vazir",
                         fontSize: 16,
                         fontWeight: "600",
-                        paddingBottom: 5,
+                        marginBottom: Platform.OS === "android" ? 5 : -10,
                         marginTop: -10
                     },
                     tabBarActiveTintColor: "#fff",
