@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 import 'intl-pluralrules';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Platform } from 'react-native';
 
 import DashboardScreen from '../../screens/Dashboard';
 import InteractionsScreen from '../../screens/Interactions';
 import CalendarScreen from '../../screens/Calendar';
 import AccountsScreen from '../../screens/Accounts';
 import VARIABLES from '../../enums/variables';
-import { Platform } from 'react-native';
+import MainGradient from '../Gradient';
 
 
 const MainNavigator = () => {
@@ -36,15 +36,10 @@ const MainNavigator = () => {
                     tabBarInactiveTintColor: VARIABLES.GRAY_COLOR_LIGHT,
                     headerShown: false,
                     tabBarBackground: () => (
-                        <LinearGradient
-                            colors={[VARIABLES.PINK_COLOR, VARIABLES.PRIMARY_COLOR_DARK]}
-                            style={{ flex: 1 }}
-                            locations={[0, 0.5]}
-                            start={{ x: 0.1, y: 0.5 }}
-                            end={{ x: 1, y: 0.5 }}
-                        />
+                        <MainGradient />
                     )
                 }}
+                initialRouteName={t("dashboard")}
             >
                 <Tab.Screen
                     name={t("calendar")}
