@@ -4,5 +4,19 @@
     "interactions": "تراکنش ها",
     "account": "حساب",
     "accounts": "حساب ها",
-    "calendar": "تقویم"
+    "calendar": "تقویم",
+    "today": "امروز",
+    "add_account": "افزودن حساب جدید",
+    "month_income": "دریافتی ماه",
+    "month_outcome": "پرداختی ماه",
+    "month_total": "موجودی کل",
+    "review_account": "خلاصه حساب ها",
+    "title": "عنوان",
+    "custom_title": "عنوان دلخواه",
+    "account_type": "نوع حساب",
+    "personal": "حساب شخصی",
+    "shared": "حساب دونگی",
+    "note": "یادداشت",
+    "add": "افزودن",
+    "select_image": "انتخاب تصویر"
 }

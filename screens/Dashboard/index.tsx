@@ -1,20 +1,29 @@
 import { StyleSheet, View } from 'react-native';
-import { useTranslation } from 'react-i18next';
 
-import CustomText from '../../components/Text';
+import Chart from './chart';
+import Cards from './cards';
+import Review from './review';
 
 
 const DashboardScreen = () => {
-    const { t } = useTranslation();
 
     return (
-        <View>
-            <CustomText>
-                {t("dashboard")}
-            </CustomText>
+        <View style={styles.container}>
+            <Chart />
+            <Cards />
+            <Review />
         </View>
     );
 };
 export default DashboardScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: 20,
+        display: "flex",
+        // justifyContent: "center",
+        alignItems: "center",
+        paddingTop: 60
+    }
+});

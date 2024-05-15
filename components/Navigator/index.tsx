@@ -1,83 +1,45 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import 'intl-pluralrules';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons';
-import { Platform } from 'react-native';
 
-import DashboardScreen from '../../screens/Dashboard';
-import InteractionsScreen from '../../screens/Interactions';
-import CalendarScreen from '../../screens/Calendar';
-import AccountsScreen from '../../screens/Accounts';
+import TabNavigation from './TabNavigation';
+import CreateAccountScreen from '../../screens/CreateAccount';
 import VARIABLES from '../../enums/variables';
 import MainGradient from '../Gradient';
 
 
 const MainNavigator = () => {
-    const Tab = createBottomTabNavigator();
+    const Stack = createNativeStackNavigator();
     const { t } = useTranslation();
 
     return (
         <NavigationContainer>
-            <Tab.Navigator
+            <Stack.Navigator
                 screenOptions={{
-                    tabBarStyle: {
-                        height: Platform.OS === "android" ? 75 : 105,
-                    },
-                    tabBarLabelStyle: {
+                    headerTitleStyle: {
                         fontFamily: "vazir",
-                        fontSize: 16,
-                        fontWeight: "600",
-                        marginBottom: Platform.OS === "android" ? 5 : -10,
-                        marginTop: -10
                     },
-                    tabBarActiveTintColor: "#fff",
-                    tabBarInactiveTintColor: VARIABLES.GRAY_COLOR_LIGHT,
-                    headerShown: false,
-                    tabBarBackground: () => (
-                        <MainGradient />
-                    )
+                    contentStyle: {
+                        backgroundColor: "#fff"
+                    },
+                    headerBackground: () => <MainGradient />,
+                    headerTitleAlign: "center",
+                    headerTintColor: VARIABLES.WHITE_COLOR,
                 }}
-                initialRouteName={t("dashboard")}
             >
-                <Tab.Screen
-                    name={t("calendar")}
-                    component={CalendarScreen}
-                    options={{
-                        tabBarIcon: ({ focused }) => (
-                            <AntDesign name="calendar" size={focused ? 42 : 32} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />
-                        ),
-                    }}
+
+                {/* ---------- Default Layout ---------- */}
+                <Stack.Screen
+                    name="App"
+                    component={TabNavigation}
+                    options={{ headerShown: false }}
                 />
-                <Tab.Screen
-                    name={t("interactions")}
-                    component={InteractionsScreen}
-                    options={{
-                        tabBarIcon: ({ focused }) => (
-                            <MaterialCommunityIcons name="swap-vertical" size={focused ? 42 : 32} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />
-                        )
-                    }}
-                />
-                <Tab.Screen
-                    name={t("accounts")}
-                    component={AccountsScreen}
-                    options={{
-                        tabBarIcon: ({ focused }) => (
-                            <MaterialCommunityIcons name="folder-sync" size={focused ? 42 : 32} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />
-                        )
-                    }}
-                />
-                <Tab.Screen
-                    name={t("dashboard")}
-                    component={DashboardScreen}
-                    options={{
-                        tabBarIcon: ({ focused }) => (
-                            <MaterialCommunityIcons name="home" size={focused ? 42 : 32} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />
-                        )
-                    }}
-                />
-            </Tab.Navigator>
+
+                {/* ---------- Custom Layout ---------- */}
+                <Stack.Screen name={t("add_account")} component={CreateAccountScreen} />
+
+            </Stack.Navigator>
         </NavigationContainer>
     );
 };
