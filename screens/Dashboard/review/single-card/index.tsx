@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import moment from 'jalali-moment';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
+import featuredStyles from '../../../../features/styles';
 import VARIABLES from '../../../../enums/variables';
 
 
@@ -12,8 +13,9 @@ const SingleCard = () => {
             <View style={styles.wrapper}>
 
                 {/* -------- Project-Avatar -------- */}
-                <View style={styles.avatar_wrapper}>
+                <View style={[styles.avatar_wrapper, featuredStyles.shadow]}>
                     <FontAwesome name="credit-card" size={22} color="white" />
+                    {/* <Image source={{ uri: "file:///data/user/0/host.exp.exponent/files/1716098582029.jpeg" }} width={40} height={40} borderRadius={10} /> */}
                 </View>
 
                 {/* -------- Content -------- */}
@@ -60,9 +62,9 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         backgroundColor: VARIABLES.SECONDARY_COLOR,
-        borderRadius: 40,
+        borderRadius: 10,
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     text: {
         fontFamily: "vazir",

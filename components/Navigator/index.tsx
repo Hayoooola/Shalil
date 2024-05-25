@@ -23,7 +23,6 @@ const MainNavigator = () => {
                     contentStyle: {
                         backgroundColor: "#fff"
                     },
-                    headerBackground: () => <MainGradient />,
                     headerTitleAlign: "center",
                     headerTintColor: VARIABLES.WHITE_COLOR,
                 }}
@@ -31,13 +30,24 @@ const MainNavigator = () => {
 
                 {/* ---------- Default Layout ---------- */}
                 <Stack.Screen
-                    name="App"
+                    name={"App"}
                     component={TabNavigation}
-                    options={{ headerShown: false }}
+                    options={{
+                        headerShown: false,
+                        headerTransparent: true
+                    }}
                 />
 
                 {/* ---------- Custom Layout ---------- */}
-                <Stack.Screen name={t("add_account")} component={CreateAccountScreen} />
+                <Stack.Screen
+                    name={t("add_account")}
+                    component={CreateAccountScreen}
+
+                    options={{
+                        headerBackTitleVisible: false,
+                        headerBackground: () => <MainGradient />,
+                    }}
+                />
 
             </Stack.Navigator>
         </NavigationContainer>

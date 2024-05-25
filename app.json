@@ -15,13 +15,17 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hayoooola.Shalil"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,7 +38,18 @@
             "./assets/fonts/Vazir.ttf"
           ]
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app need access to your photos"
+        }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "6ac68c1f-093a-455b-8537-b9795fcf5d01"
+      }
+    }
   }
 }

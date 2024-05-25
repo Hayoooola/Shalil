@@ -12,6 +12,20 @@ const featuredStyles = StyleSheet.create({
         fontFamily: "vazir",
         borderRadius: 10,
         color: VARIABLES.BLACK_COLOR
+    },
+    text: {
+        fontFamily: "vazir",
+        fontSize: 14
+    },
+    shadow: {
+        elevation: 5,
+        shadowColor: "#333",
+        shadowOffset: {
+            height: 5,
+            width: 5
+        },
+        shadowOpacity: 1,
+        shadowRadius: 5
     }
 });
 
