@@ -28,7 +28,45 @@ const featuredStyles = StyleSheet.create({
         },
         shadowOpacity: 1,
         shadowRadius: 5
-    }
+    },
+    screen_container: {
+        flex: 1,
+        paddingHorizontal: 20,
+        display: "flex",
+        alignItems: "center",
+        paddingTop: 60
+    },
+    btn_group_wrapper: {
+        flexDirection: "row-reverse",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 10,
+        backgroundColor: VARIABLES.WHITE_COLOR,
+        borderRadius: 10,
+        padding: 5
+    },
+    btn_group: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        paddingVertical: 10,
+    },
+    btn_group_active: {
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        shadowColor: "#777",
+        shadowOffset: {
+            width: 3,
+            height: 3
+        },
+        shadowOpacity: 0.5,
+        elevation: 3
+    },
+    btn_group_text: {
+        fontFamily: "vazir",
+        fontSize: 18,
+        color: VARIABLES.PRIMARY_COLOR_DARK
+    },
 });
 
 export default featuredStyles;

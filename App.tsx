@@ -8,6 +8,8 @@ import MainLoading from './components/Loading';
 import fa from "./assets/locale/fa.json";
 import MainNavigator from './components/Navigator';
 import toastConfig from './toastConfig';
+import { Provider } from 'react-redux';
+import store from './store';
 
 // Config i18n to support multi-lang
 i18next
@@ -29,10 +31,10 @@ export default function App() {
   return (
     <>
       {fontsLoaded ? (
-        <>
+        <Provider store={store}>
           <MainNavigator />
           <Toast config={toastConfig} />
-        </>
+        </Provider>
       ) : (
         <MainLoading />
       )}
