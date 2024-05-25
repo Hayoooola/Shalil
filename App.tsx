@@ -2,10 +2,12 @@ import { useFonts } from 'expo-font';
 import i18next from "i18next";
 import { initReactI18next } from 'react-i18next';
 import 'intl-pluralrules';
+import Toast from 'react-native-toast-message';
 
 import MainLoading from './components/Loading';
 import fa from "./assets/locale/fa.json";
 import MainNavigator from './components/Navigator';
+import toastConfig from './toastConfig';
 
 // Config i18n to support multi-lang
 i18next
@@ -27,7 +29,10 @@ export default function App() {
   return (
     <>
       {fontsLoaded ? (
-        <MainNavigator />
+        <>
+          <MainNavigator />
+          <Toast config={toastConfig} />
+        </>
       ) : (
         <MainLoading />
       )}

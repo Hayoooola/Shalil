@@ -1,9 +1,11 @@
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as FileSystem from 'expo-file-system';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import Toast from 'react-native-toast-message';
 
 import featuredStyles from '../../features/styles';
 import { useTranslation } from 'react-i18next';
@@ -12,7 +14,6 @@ import ACCOUNT_TYPE from '../../enums/account_type';
 import Avatar from './Avatar';
 import MainGradient from '../../components/Gradient';
 import IProject from '../../interfaces/projects';
-import { useNavigation } from '@react-navigation/native';
 
 
 // Provides Create new Account page
@@ -36,6 +37,7 @@ const CreateAccountScreen = () => {
             note,
             imageUri: null
         };
+
 
         // Replace ImageUri in case of select an image by user
         if (imageUri) {
@@ -79,6 +81,12 @@ const CreateAccountScreen = () => {
 
             // Store projects to the store
             await AsyncStorage.setItem("projects", JSON.stringify(projects));
+
+            // Show Success toast
+            Toast.show({
+                type: 'success',
+                text2: t("create_project_success_message")
+            });
 
             // Redirect user to Account page
             navigation.navigate(t("accounts"));

@@ -24,5 +24,7 @@
     "camera_access_denied_message": "بدون دسترسی به دوربین امکان ثبت عکس جدید وجود ندارد!",
     "back": "بازگشت",
     "select_image_error_message": "مشکلی در ذخیره تصویر به وجود آمده!",
-    "create_project_error_message": "مشکلی در ساخت پروژه جدید به وحود آمده!"
+    "success_toast": "عملیات موفقیت آمیز:",
+    "create_project_error_message": "مشکلی در ساخت پروژه جدید به وحود آمده!",
+    "create_project_success_message": "پروژه با موفقیت ساخته شد."
 }
