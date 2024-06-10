@@ -26,5 +26,13 @@
     "select_image_error_message": "مشکلی در ذخیره تصویر به وجود آمده!",
     "success_toast": "عملیات موفقیت آمیز:",
     "create_project_error_message": "مشکلی در ساخت پروژه جدید به وحود آمده!",
-    "create_project_success_message": "پروژه با موفقیت ساخته شد."
+    "create_project_success_message": "پروژه با موفقیت ساخته شد.",
+    "all": "همه",
+    "debtor": "بدهکار",
+    "creditor": "طلبکار",
+    "failed_to_load_data": "مشکلی در بارگزاری اطلاعات به وجود آمده!",
+    "currency": "تومان",
+    "square": "تسویه شده",
+    "project_not_found_by_filter": "هیچ حسابی با این فیلتر وجود ندارد!",
+    "project_not_found": "هنوز حسابی ساخته نشده!"
 }

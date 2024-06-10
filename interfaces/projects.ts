@@ -6,4 +6,7 @@ export default interface IProject {
     account_type: ACCOUNT_TYPE;
     note: string | null;
     imageUri: string | null;
+    total: number;
+    date_of_create: number;
+    last_update: number;
 }

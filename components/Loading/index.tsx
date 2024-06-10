@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import VARIABLES from '../../enums/variables';
 
 
 // Provides main loading of app
 const MainLoading = () => {
     return (
         <View style={styles.container}>
-            <Text>Loading...</Text>
+            <ActivityIndicator size="large" color={VARIABLES.PRIMARY_COLOR_DARK} />
         </View>
     );
 };

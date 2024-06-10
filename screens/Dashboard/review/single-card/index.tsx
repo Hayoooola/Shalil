@@ -1,21 +1,54 @@
+import { FC } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import moment from 'jalali-moment';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../../../features/styles';
 import VARIABLES from '../../../../enums/variables';
+import IProject from '../../../../interfaces/projects';
+import ACCOUNT_TYPE from '../../../../enums/account_type';
+
+interface IProps {
+    projectData: IProject;
+}
 
 
 // Provides single-account to review section in Dashboard view
-const SingleCard = () => {
+const SingleCard: FC<IProps> = ({ projectData }) => {
+    const { t } = useTranslation();
+
+    // Handle find total Style
+    const handleTotalStyle = () => (
+        projectData.total > 0 ? (styles.total_creditor) :
+            projectData.total < 0 ? (styles.total_creditor) :
+                styles.total_cleared
+    );
+
+    // Handle calculate and show total
+    const handleCalculateTotal = () => (
+        projectData.total > 0 ? (`+ ${(98000).toLocaleString("fa")} ${t("currency")}`) :
+            projectData.total < 0 ? (`+ ${(98000).toLocaleString("fa")} ${t("currency")}`) :
+                t("square")
+    );
+
+
     return (
         <View style={styles.container}>
             <View style={styles.wrapper}>
 
                 {/* -------- Project-Avatar -------- */}
                 <View style={[styles.avatar_wrapper, featuredStyles.shadow]}>
-                    <FontAwesome name="credit-card" size={22} color="white" />
-                    {/* <Image source={{ uri: "file:///data/user/0/host.exp.exponent/files/1716098582029.jpeg" }} width={40} height={40} borderRadius={10} /> */}
+                    {projectData.imageUri ? (
+                        <Image source={{ uri: projectData.imageUri }} width={40} height={40} borderRadius={10} />
+                    ) : (
+                        projectData.account_type === ACCOUNT_TYPE.PERSONAL ? (
+                            <FontAwesome name="credit-card" size={22} color="white" />
+                        ) : (
+                            <MaterialCommunityIcons name="account-multiple-plus" size={32} color="white" />
+                        )
+                    )}
                 </View>
 
                 {/* -------- Content -------- */}
@@ -23,17 +56,17 @@ const SingleCard = () => {
 
                     {/* Title */}
                     <Text style={[styles.text, styles.title]} numberOfLines={2}>
-                        خرید لوازم ماشین
+                        {projectData.title}
                     </Text>
 
                     {/* Total */}
-                    <Text style={[styles.text, styles.total]}>
-                        {`+ ${(98000).toLocaleString("fa")} تومان`}
+                    <Text style={[styles.text, styles.total, handleTotalStyle()]}>
+                        {handleCalculateTotal()}
                     </Text>
 
                     {/* Date */}
                     <Text style={[styles.text, styles.date]}>
-                        {moment().locale("fa-IR").format('jYYYY/jMM/jD - HH:mm')}
+                        {moment(projectData.last_update).locale("fa-IR").format('jYYYY/jMM/jD - HH:mm')}
                     </Text>
 
                 </View>
@@ -43,6 +76,7 @@ const SingleCard = () => {
     );
 };
 export default SingleCard;
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -55,8 +89,6 @@ const styles = StyleSheet.create({
         flexDirection: "row-reverse",
         alignItems: "center",
         gap: 15,
-        borderBottomWidth: 1,
-        borderBlockColor: VARIABLES.SECONDARY_COLOR
     },
     avatar_wrapper: {
         width: 40,
@@ -71,10 +103,20 @@ const styles = StyleSheet.create({
         textAlign: "right"
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
     },
     total: {
         fontSize: 18,
+        color: VARIABLES.SECONDARY_COLOR_DARK
+    },
+    total_cleared: {
+        color: VARIABLES.PRIMARY_COLOR_DARK,
+        fontSize: 15,
+    },
+    total_debtor: {
+        color: VARIABLES.RED_COLOR
+    },
+    total_creditor: {
         color: VARIABLES.SECONDARY_COLOR_DARK
     },
     date: {

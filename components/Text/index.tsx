@@ -14,6 +14,6 @@ const styles = StyleSheet.create({
     text: {
         fontFamily: "vazir",
         fontWeight: "normal",
-        fontSize: 18
+        fontSize: 14
     }
 });

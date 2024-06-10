@@ -26,7 +26,7 @@ const featuredStyles = StyleSheet.create({
             height: 5,
             width: 5
         },
-        shadowOpacity: 1,
+        shadowOpacity: 0.5,
         shadowRadius: 5
     },
     screen_container: {

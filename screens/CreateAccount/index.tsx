@@ -30,12 +30,17 @@ const CreateAccountScreen = () => {
 
     // Handle Create a new account
     const handleSubmit = async () => {
+        const now = Date.now();
+
         const newProject: IProject = {
             id: uuid.v4(),
             title,
             account_type: accountType,
             note,
-            imageUri: null
+            imageUri: null,
+            total: 0,
+            date_of_create: now,
+            last_update: now
         };
 
 
@@ -46,7 +51,7 @@ const CreateAccountScreen = () => {
                 const format = imageUri.split(".")[imageUri.split(".").length - 1];
 
                 // Generate a unique filename
-                const filename = `${Date.now()}.${format}`;
+                const filename = `${now}.${format}`;
 
                 // Get a writeable directory on the device
                 const directory = await FileSystem.documentDirectory;
@@ -120,24 +125,24 @@ const CreateAccountScreen = () => {
                 <Text style={styles.title}>
                     {t("account_type")}
                 </Text>
-                <View style={styles.btn_group_wrapper}>
+                <View style={featuredStyles.btn_group_wrapper}>
 
                     {/* Personal */}
                     <TouchableOpacity
-                        style={accountType === ACCOUNT_TYPE.PERSONAL ? [styles.btn_group, styles.btn_group_active] : styles.btn_group}
+                        style={accountType === ACCOUNT_TYPE.PERSONAL ? [featuredStyles.btn_group, featuredStyles.btn_group_active] : featuredStyles.btn_group}
                         onPress={() => setAccountType(ACCOUNT_TYPE.PERSONAL)}
                     >
-                        <Text style={styles.btn_group_text}>
+                        <Text style={featuredStyles.btn_group_text}>
                             {t("personal")}
                         </Text>
                     </TouchableOpacity>
 
                     {/* Shared */}
                     <TouchableOpacity
-                        style={accountType === ACCOUNT_TYPE.SHARED ? [styles.btn_group, styles.btn_group_active] : styles.btn_group}
+                        style={accountType === ACCOUNT_TYPE.SHARED ? [featuredStyles.btn_group, featuredStyles.btn_group_active] : featuredStyles.btn_group}
                         onPress={() => setAccountType(ACCOUNT_TYPE.SHARED)}
                     >
-                        <Text style={styles.btn_group_text}>
+                        <Text style={featuredStyles.btn_group_text}>
                             {t("shared")}
                         </Text>
                     </TouchableOpacity>
@@ -204,37 +209,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         marginTop: 15,
         textAlign: "right"
-    },
-    btn_group_wrapper: {
-        flexDirection: "row-reverse",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 10,
-        backgroundColor: VARIABLES.WHITE_COLOR,
-        borderRadius: 10,
-        padding: 5
-    },
-    btn_group: {
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        paddingVertical: 10,
-    },
-    btn_group_active: {
-        backgroundColor: "#fff",
-        borderRadius: 10,
-        shadowColor: "#777",
-        shadowOffset: {
-            width: 3,
-            height: 3
-        },
-        shadowOpacity: 0.5,
-        elevation: 3
-    },
-    btn_group_text: {
-        fontFamily: "vazir",
-        fontSize: 18,
-        color: VARIABLES.PRIMARY_COLOR_DARK
     },
     note: {
         height: 96
