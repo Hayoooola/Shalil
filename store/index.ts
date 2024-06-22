@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import projectsReducer from "./reducers/projects";
+import accountsReducer from "./reducers/accounts";
 import IStore from '../interfaces/store';
 
 
 const store = configureStore<IStore>({
     reducer: {
-        projects: projectsReducer,
+        accounts: accountsReducer,
     },
 });
 

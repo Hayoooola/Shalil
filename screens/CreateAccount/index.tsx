@@ -13,7 +13,7 @@ import VARIABLES from '../../enums/variables';
 import ACCOUNT_TYPE from '../../enums/account_type';
 import Avatar from './Avatar';
 import MainGradient from '../../components/Gradient';
-import IAccount from '../../interfaces/projects';
+import IAccount from '../../interfaces/accounts';
 
 
 // Provides Create new Account page

@@ -6,7 +6,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { IAccountInTransaction } from '../../../interfaces/transactions';
-import IProject from '../../../interfaces/projects';
+import IProject from '../../../interfaces/accounts';
 import VARIABLES from '../../../enums/variables';
 import ACCOUNT_TYPE from '../../../enums/account_type';
 

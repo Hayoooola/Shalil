@@ -10,10 +10,10 @@ import VARIABLES from '../../../enums/variables';
 import SingleCard from './single-card';
 import CreateNewAccountBtn from './add_account_btn';
 import MainDivider from '../../../components/Divider';
-import { fetchAccounts } from '../../../store/reducers/projects';
+import { fetchAccounts } from '../../../store/reducers/accounts';
 import MainLoading from '../../../components/Loading';
 import IStore from '../../../interfaces/store';
-import IAccount from '../../../interfaces/projects';
+import IAccount from '../../../interfaces/accounts';
 import CustomText from '../../../components/Text';
 
 
@@ -25,7 +25,7 @@ const Review = () => {
 
   const dispatch = useDispatch();
 
-  const { data, error, loading } = useSelector((store: IStore) => store.projects);
+  const { data, error, loading } = useSelector((store: IStore) => store.accounts);
 
   // Fetch All projects
   useFocusEffect(

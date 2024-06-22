@@ -14,11 +14,11 @@ import AddReceiptImage from './add_receipt_image';
 import SelectAccount from './select_account';
 import MainDatePicker from '../../components/DatePicker';
 import MainActionButton from '../../components/ActionButton';
-import { fetchAccounts } from '../../store/reducers/projects';
+import { fetchAccounts } from '../../store/reducers/accounts';
 import featuredStyles from '../../features/styles';
 import ITransaction, { IAccountInTransaction } from '../../interfaces/transactions';
 import IStore from '../../interfaces/store';
-import IAccount from '../../interfaces/projects';
+import IAccount from '../../interfaces/accounts';
 import TRANSACTION_TYPE from '../../enums/transaction_type';
 import VARIABLES from '../../enums/variables';
 
@@ -39,7 +39,7 @@ const CreateTransactionScreen = () => {
 
     const { t } = useTranslation();
 
-    const { data: allAccount, error } = useSelector((store: IStore) => store.projects);
+    const { data: allAccount, error } = useSelector((store: IStore) => store.accounts);
 
     // Fetch All Accounts
     useFocusEffect(

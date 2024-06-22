@@ -1,10 +1,10 @@
-import IProject from "./projects";
+import IProject from "./accounts";
 
 export default interface IStore {
-    projects: IProjectReducer;
+    accounts: IAccountReducer;
 }
 
-export interface IProjectReducer {
+export interface IAccountReducer {
     loading: boolean,
     error: null | string,
     data: IProject[];

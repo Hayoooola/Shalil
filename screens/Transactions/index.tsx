@@ -10,9 +10,9 @@ import Filters from './filters';
 import CreateNewTransactionBtn from './add_new_transaction_btn';
 import SingleCard from '../Dashboard/review/single-card';
 import CustomText from '../../components/Text';
-import { fetchAccounts } from '../../store/reducers/projects';
+import { fetchAccounts } from '../../store/reducers/accounts';
 import IStore from '../../interfaces/store';
-import IAccount from '../../interfaces/projects';
+import IAccount from '../../interfaces/accounts';
 import MainLoading from '../../components/Loading';
 import TRANSACTIONS_FILTER from '../../enums/transactions_filter';
 import VARIABLES from '../../enums/variables';
@@ -26,7 +26,7 @@ const TransactionsScreen = () => {
 
     const { t } = useTranslation();
 
-    const { data: allProjects, error, loading } = useSelector((store: IStore) => store.projects);
+    const { data: allProjects, error, loading } = useSelector((store: IStore) => store.accounts);
 
     // Fetch All projects
     useFocusEffect(

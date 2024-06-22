@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../../../features/styles';
 import VARIABLES from '../../../../enums/variables';
-import IProject from '../../../../interfaces/projects';
+import IProject from '../../../../interfaces/accounts';
 import ACCOUNT_TYPE from '../../../../enums/account_type';
 
 interface IProps {
@@ -22,14 +22,14 @@ const SingleCard: FC<IProps> = ({ projectData }) => {
     // Handle find total Style
     const handleTotalStyle = () => (
         projectData.total > 0 ? (styles.total_creditor) :
-            projectData.total < 0 ? (styles.total_creditor) :
+            projectData.total < 0 ? (styles.total_debtor) :
                 styles.total_cleared
     );
 
     // Handle calculate and show total
     const handleCalculateTotal = () => (
-        projectData.total > 0 ? (`+ ${(98000).toLocaleString("fa")} ${t("currency")}`) :
-            projectData.total < 0 ? (`+ ${(98000).toLocaleString("fa")} ${t("currency")}`) :
+        projectData.total > 0 ? (`${(projectData.total).toLocaleString("fa")} ${t("currency")} +`) :
+            projectData.total < 0 ? (`${(Math.abs(projectData.total)).toLocaleString("fa")} ${t("currency")} -`) :
                 t("square")
     );
 

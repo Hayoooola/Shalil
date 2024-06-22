@@ -9,9 +9,9 @@ import featuredStyles from '../../features/styles';
 import Filters from './filters';
 import CreateNewAccountBtn from '../Dashboard/review/add_account_btn';
 import SingleCard from '../Dashboard/review/single-card';
-import { fetchAccounts } from '../../store/reducers/projects';
+import { fetchAccounts } from '../../store/reducers/accounts';
 import IStore from '../../interfaces/store';
-import IAccount from '../../interfaces/projects';
+import IAccount from '../../interfaces/accounts';
 import MainLoading from '../../components/Loading';
 import STATUS_FILTER from '../../enums/status_filter';
 import VARIABLES from '../../enums/variables';
@@ -20,15 +20,15 @@ import CustomText from '../../components/Text';
 
 const AccountsScreen = () => {
     const [activeFilter, setActiveFilter] = useState(STATUS_FILTER.ALL);
-    const [activeProjects, setActiveProjects] = useState<IAccount[]>([]);
+    const [activeAccounts, setActiveAccounts] = useState<IAccount[]>([]);
 
     const dispatch = useDispatch();
 
     const { t } = useTranslation();
 
-    const { data: allProjects, error, loading } = useSelector((store: IStore) => store.projects);
+    const { data: allAccounts, error, loading } = useSelector((store: IStore) => store.accounts);
 
-    // Fetch All projects
+    // Fetch All Accounts
     useFocusEffect(
         useCallback(() => {
             // @ts-ignore
@@ -36,12 +36,12 @@ const AccountsScreen = () => {
         }, [])
     );
 
-    // Update initial Projects to show
+    // Update initial Accounts to show
     useMemo(() => {
-        allProjects.length && setActiveProjects(allProjects);
-    }, [allProjects]);
+        allAccounts.length && setActiveAccounts(allAccounts);
+    }, [allAccounts]);
 
-    // Handle show error toast in case of Un-Successful loading projects
+    // Handle show error toast in case of Un-Successful loading Accounts
     useMemo(() => {
         error && Toast.show({
             type: "error",
@@ -50,15 +50,15 @@ const AccountsScreen = () => {
     }, [error]);
 
 
-    // Handle update activeProjects by changing filters
+    // Handle update activeAccounts by changing filters
     useMemo(() => {
         switch (activeFilter) {
             case STATUS_FILTER.CREDITOR:
-                return setActiveProjects(allProjects.filter(project => project.total > 0));
+                return setActiveAccounts(allAccounts.filter(project => project.total > 0));
             case STATUS_FILTER.DEBTOR:
-                return setActiveProjects(allProjects.filter(project => project.total < 0));
+                return setActiveAccounts(allAccounts.filter(project => project.total < 0));
             default:
-                return setActiveProjects(allProjects);
+                return setActiveAccounts(allAccounts);
         }
     }, [activeFilter]);
 
@@ -78,8 +78,8 @@ const AccountsScreen = () => {
             ) : (
                 <ScrollView style={styles.accountsWrapper}>
 
-                    {activeProjects.length ? (
-                        activeProjects.map((projectData, index) => (
+                    {activeAccounts.length ? (
+                        activeAccounts.map((projectData, index) => (
                             <View key={index} style={styles.card_wrapper}>
                                 <SingleCard projectData={projectData} />
                             </View>

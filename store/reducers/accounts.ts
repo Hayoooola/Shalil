@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { IProjectReducer } from "../../interfaces/store";
+import { IAccountReducer } from "../../interfaces/store";
 
 
 // ---------------------! Actions !--------------------- //
@@ -24,13 +24,13 @@ export const fetchAccounts = createAsyncThunk(
 
 
 // ---------------------! Reducers !--------------------- //
-const initialState: IProjectReducer = {
+const initialState: IAccountReducer = {
     loading: false,
     error: null,
     data: []
 };
 
-const projectsSlice = createSlice({
+const accountsSlice = createSlice({
     name: "Accounts",
     initialState,
     reducers: {},
@@ -54,4 +54,4 @@ const projectsSlice = createSlice({
     }
 });
 
-export default projectsSlice.reducer;
+export default accountsSlice.reducer;
