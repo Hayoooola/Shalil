@@ -10,16 +10,16 @@ import VARIABLES from '../../../enums/variables';
 import SingleCard from './single-card';
 import CreateNewAccountBtn from './add_account_btn';
 import MainDivider from '../../../components/Divider';
-import { fetchProjects } from '../../../store/reducers/projects';
+import { fetchAccounts } from '../../../store/reducers/projects';
 import MainLoading from '../../../components/Loading';
 import IStore from '../../../interfaces/store';
-import IProject from '../../../interfaces/projects';
+import IAccount from '../../../interfaces/projects';
 import CustomText from '../../../components/Text';
 
 
 // Provides accounts review in Dashboard view
 const Review = () => {
-  const [projects, setProjects] = useState<IProject[]>([]);
+  const [projects, setProjects] = useState<IAccount[]>([]);
 
   const { t } = useTranslation();
 
@@ -31,7 +31,7 @@ const Review = () => {
   useFocusEffect(
     useCallback(() => {
       // @ts-ignore
-      dispatch(fetchProjects());
+      dispatch(fetchAccounts());
     }, [])
   );
 

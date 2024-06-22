@@ -1,0 +1,7 @@
+enum TRANSACTIONS_FILTER {
+    ALL,
+    PAY,
+    RECEIPT
+}
+
+export default TRANSACTIONS_FILTER;

@@ -5,8 +5,9 @@ import 'intl-pluralrules';
 
 import TabNavigation from './TabNavigation';
 import CreateAccountScreen from '../../screens/CreateAccount';
-import VARIABLES from '../../enums/variables';
+import CreateTransactionScreen from '../../screens/CreateTransaction';
 import MainGradient from '../Gradient';
+import VARIABLES from '../../enums/variables';
 
 
 const MainNavigator = () => {
@@ -39,9 +40,20 @@ const MainNavigator = () => {
                 />
 
                 {/* ---------- Custom Layout ---------- */}
+                {/* Add new Account */}
                 <Stack.Screen
                     name={t("add_account")}
                     component={CreateAccountScreen}
+
+                    options={{
+                        headerBackTitleVisible: false,
+                        headerBackground: () => <MainGradient />,
+                    }}
+                />
+                {/* Add new Transaction */}
+                <Stack.Screen
+                    name={t("add_transaction")}
+                    component={CreateTransactionScreen}
 
                     options={{
                         headerBackTitleVisible: false,

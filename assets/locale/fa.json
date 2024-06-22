@@ -1,7 +1,7 @@
 {
     "dashboard": "داشبرد",
-    "interaction": "تراکنش",
-    "interactions": "تراکنش ها",
+    "transaction": "تراکنش",
+    "transactions": "تراکنش ها",
     "account": "حساب",
     "accounts": "حساب ها",
     "calendar": "تقویم",
@@ -34,5 +34,20 @@
     "currency": "تومان",
     "square": "تسویه شده",
     "project_not_found_by_filter": "هیچ حسابی با این فیلتر وجود ندارد!",
-    "project_not_found": "هنوز حسابی ساخته نشده!"
+    "project_not_found": "هنوز حسابی ساخته نشده!",
+    "transaction_type": "نوع تراکنش",
+    "value": "مبلغ",
+    "unit": "تومان",
+    "pay": "پرداخت",
+    "receipt": "دریافت",
+    "add_transaction": "افزودن تراکنش جدید",
+    "add_receipt_photo": "افزودن عکس رسید خرید",
+    "select_receipt_image": "افزودن عکس رسید تراکنش",
+    "select_account": "انتخاب حساب",
+    "select_account_placeholder": "برای انتخاب حساب کلیک کنید",
+    "select_date": "تاریخ تراکنش",
+    "transaction_value_error": "مبلغی وارد نشده!",
+    "transaction_account_error": "حسابی انتخاب نشده!",
+    "create_transaction_success_message": "تراکنش با موفقیت ثبت شد",
+    "create_transaction_error_message": "مشکلی در ثبت تراکنش به وجود آمده!"
 }

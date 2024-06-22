@@ -7,20 +7,20 @@ import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../features/styles';
 import Filters from './filters';
-import CreateNewAccountBtn from '../Dashboard/review/add_account_btn';
+import CreateNewTransactionBtn from './add_new_transaction_btn';
 import SingleCard from '../Dashboard/review/single-card';
+import CustomText from '../../components/Text';
 import { fetchAccounts } from '../../store/reducers/projects';
 import IStore from '../../interfaces/store';
 import IAccount from '../../interfaces/projects';
 import MainLoading from '../../components/Loading';
-import STATUS_FILTER from '../../enums/status_filter';
+import TRANSACTIONS_FILTER from '../../enums/transactions_filter';
 import VARIABLES from '../../enums/variables';
-import CustomText from '../../components/Text';
 
 
-const AccountsScreen = () => {
-    const [activeFilter, setActiveFilter] = useState(STATUS_FILTER.ALL);
-    const [activeProjects, setActiveProjects] = useState<IAccount[]>([]);
+const TransactionsScreen = () => {
+    const [activeFilter, setActiveFilter] = useState(TRANSACTIONS_FILTER.ALL);
+    const [activeTransactions, setActiveTransactions] = useState<IAccount[]>([]);
 
     const dispatch = useDispatch();
 
@@ -38,7 +38,7 @@ const AccountsScreen = () => {
 
     // Update initial Projects to show
     useMemo(() => {
-        allProjects.length && setActiveProjects(allProjects);
+        allProjects.length && setActiveTransactions(allProjects);
     }, [allProjects]);
 
     // Handle show error toast in case of Un-Successful loading projects
@@ -50,15 +50,15 @@ const AccountsScreen = () => {
     }, [error]);
 
 
-    // Handle update activeProjects by changing filters
+    // Handle update activeTransactions by changing filters
     useMemo(() => {
         switch (activeFilter) {
-            case STATUS_FILTER.CREDITOR:
-                return setActiveProjects(allProjects.filter(project => project.total > 0));
-            case STATUS_FILTER.DEBTOR:
-                return setActiveProjects(allProjects.filter(project => project.total < 0));
+            case TRANSACTIONS_FILTER.PAY:
+                return setActiveTransactions(allProjects.filter(project => project.total > 0));
+            case TRANSACTIONS_FILTER.RECEIPT:
+                return setActiveTransactions(allProjects.filter(project => project.total < 0));
             default:
-                return setActiveProjects(allProjects);
+                return setActiveTransactions(allProjects);
         }
     }, [activeFilter]);
 
@@ -72,19 +72,19 @@ const AccountsScreen = () => {
                 setActiveFilter={setActiveFilter}
             />
 
-            {/* ---------- Accounts review ---------- */}
+            {/* ---------- Transactions review ---------- */}
             {loading ? (
                 <MainLoading />
             ) : (
-                <ScrollView style={styles.accountsWrapper}>
+                <ScrollView style={styles.transactionsWrapper}>
 
-                    {activeProjects.length ? (
-                        activeProjects.map((projectData, index) => (
+                    {activeTransactions.length ? (
+                        activeTransactions.map((projectData, index) => (
                             <View key={index} style={styles.card_wrapper}>
                                 <SingleCard projectData={projectData} />
                             </View>
                         ))
-                    ) : activeFilter !== STATUS_FILTER.ALL ? (
+                    ) : activeFilter !== TRANSACTIONS_FILTER.ALL ? (
                         <View style={{ paddingTop: 20 }}>
                             <CustomText>
                                 {t("project_not_found_by_filter")}
@@ -101,22 +101,22 @@ const AccountsScreen = () => {
                 </ScrollView>
             )}
 
-            {/* Create a new Account btn */}
-            <View style={styles.create_new_account_container}>
-                <CreateNewAccountBtn />
+            {/* Create a new transaction btn */}
+            <View style={styles.create_new_transaction_container}>
+                <CreateNewTransactionBtn />
             </View>
 
         </View>
     );
 };
-export default AccountsScreen;
+export default TransactionsScreen;
 
 const styles = StyleSheet.create({
-    create_new_account_container: {
+    create_new_transaction_container: {
         height: 80,
         minWidth: "100%"
     },
-    accountsWrapper: {
+    transactionsWrapper: {
         flex: 1,
     },
     card_wrapper: {

@@ -5,12 +5,12 @@ import { IProjectReducer } from "../../interfaces/store";
 
 
 // ---------------------! Actions !--------------------- //
-// Fetch all projects
-export const fetchProjects = createAsyncThunk(
-    "Projects/fetchProjects",
+// Fetch all Accounts
+export const fetchAccounts = createAsyncThunk(
+    "Projects/fetchAccounts",
     async (params, { rejectWithValue }) => {
         try {
-            const storedProjects = await AsyncStorage.getItem("projects");
+            const storedProjects = await AsyncStorage.getItem("accounts");
             const allProjects = storedProjects ? JSON.parse(storedProjects) : [];
 
             return allProjects;
@@ -31,22 +31,22 @@ const initialState: IProjectReducer = {
 };
 
 const projectsSlice = createSlice({
-    name: "Projects",
+    name: "Accounts",
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchProjects.pending, (state) => {
+            .addCase(fetchAccounts.pending, (state) => {
                 state.loading = true;
                 state.error = null;
                 state.data = [];
             })
-            .addCase(fetchProjects.fulfilled, (state, action) => {
+            .addCase(fetchAccounts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.error = null;
                 state.data = action.payload;
             })
-            .addCase(fetchProjects.rejected, (state, action) => {
+            .addCase(fetchAccounts.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload as string;
                 state.data = [];

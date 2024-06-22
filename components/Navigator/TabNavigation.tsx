@@ -6,7 +6,7 @@ import { Platform } from 'react-native';
 import 'intl-pluralrules';
 
 import DashboardScreen from '../../screens/Dashboard';
-import InteractionsScreen from '../../screens/Interactions';
+import TransactionsScreen from '../../screens/Transactions';
 import CalendarScreen from '../../screens/Calendar';
 import AccountsScreen from '../../screens/Accounts';
 import VARIABLES from '../../enums/variables';
@@ -52,8 +52,8 @@ const TabNavigation = () => {
                 }}
             />
             <Tab.Screen
-                name={t("interactions")}
-                component={InteractionsScreen}
+                name={t("transactions")}
+                component={TransactionsScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
                         <MaterialCommunityIcons name="swap-vertical" size={focused ? 42 : 32} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />

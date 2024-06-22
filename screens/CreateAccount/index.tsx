@@ -13,7 +13,7 @@ import VARIABLES from '../../enums/variables';
 import ACCOUNT_TYPE from '../../enums/account_type';
 import Avatar from './Avatar';
 import MainGradient from '../../components/Gradient';
-import IProject from '../../interfaces/projects';
+import IAccount from '../../interfaces/projects';
 
 
 // Provides Create new Account page
@@ -32,7 +32,7 @@ const CreateAccountScreen = () => {
     const handleSubmit = async () => {
         const now = Date.now();
 
-        const newProject: IProject = {
+        const newAccount: IAccount = {
             id: uuid.v4(),
             title,
             account_type: accountType,
@@ -65,7 +65,7 @@ const CreateAccountScreen = () => {
                 });
 
                 // Replace new ImageUri
-                newProject.imageUri = newImageUri;
+                newAccount.imageUri = newImageUri;
 
             } catch (err) {
 
@@ -77,20 +77,20 @@ const CreateAccountScreen = () => {
 
         // Storing data
         try {
-            // Get prev projects data
-            const prevProjects = await AsyncStorage.getItem("projects");
-            const projects: IProject[] = prevProjects ? JSON.parse(prevProjects) : [];
+            // Get prev Accounts data
+            const prevAccounts = await AsyncStorage.getItem("Accounts");
+            const Accounts: IAccount[] = prevAccounts ? JSON.parse(prevAccounts) : [];
 
-            // Prepare projects to store
-            projects.push(newProject);
+            // Prepare Accounts to store
+            Accounts.push(newAccount);
 
-            // Store projects to the store
-            await AsyncStorage.setItem("projects", JSON.stringify(projects));
+            // Store Accounts to the store
+            await AsyncStorage.setItem("accounts", JSON.stringify(Accounts));
 
             // Show Success toast
             Toast.show({
                 type: 'success',
-                text2: t("create_project_success_message")
+                text2: t("create_Account_success_message")
             });
 
             // Redirect user to Account page
@@ -99,7 +99,7 @@ const CreateAccountScreen = () => {
         } catch (err) {
 
             // Show alert to user
-            alert(t("create_project_error_message"));
+            alert(t("create_Account_error_message"));
         }
     };
 
