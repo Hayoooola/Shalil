@@ -1,6 +1,6 @@
-import { useCallback, useMemo, useState } from 'react';
+import { Fragment, useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
@@ -8,40 +8,43 @@ import { useTranslation } from 'react-i18next';
 import featuredStyles from '../../features/styles';
 import Filters from './filters';
 import CreateNewTransactionBtn from './add_new_transaction_btn';
-import SingleCard from '../Dashboard/review/single-card';
+import SingleTransaction from './single_transaction';
 import CustomText from '../../components/Text';
-import { fetchAccounts } from '../../store/reducers/accounts';
+import MainDivider from '../../components/Divider';
+import { fetchTransactions } from '../../store/reducers/transactions';
+import { sortTransactions } from '../../features/sort';
 import IStore from '../../interfaces/store';
-import IAccount from '../../interfaces/accounts';
+import ITransaction from '../../interfaces/transactions';
 import MainLoading from '../../components/Loading';
 import TRANSACTIONS_FILTER from '../../enums/transactions_filter';
 import VARIABLES from '../../enums/variables';
+import TRANSACTION_TYPE from '../../enums/transaction_type';
 
 
 const TransactionsScreen = () => {
     const [activeFilter, setActiveFilter] = useState(TRANSACTIONS_FILTER.ALL);
-    const [activeTransactions, setActiveTransactions] = useState<IAccount[]>([]);
+    const [activeTransactions, setActiveTransactions] = useState<ITransaction[]>([]);
 
     const dispatch = useDispatch();
 
     const { t } = useTranslation();
 
-    const { data: allProjects, error, loading } = useSelector((store: IStore) => store.accounts);
+    const { data: allTransactions, error, loading } = useSelector((store: IStore) => store.transactions);
 
-    // Fetch All projects
+    // Fetch All Transactions
     useFocusEffect(
         useCallback(() => {
             // @ts-ignore
-            dispatch(fetchAccounts());
+            dispatch(fetchTransactions());
         }, [])
     );
 
-    // Update initial Projects to show
+    // Update initial Transactions to show
     useMemo(() => {
-        allProjects.length && setActiveTransactions(allProjects);
-    }, [allProjects]);
+        allTransactions.length && setActiveTransactions(sortTransactions(allTransactions));
+    }, [allTransactions]);
 
-    // Handle show error toast in case of Un-Successful loading projects
+    // Handle show error toast in case of Un-Successful loading Transactions
     useMemo(() => {
         error && Toast.show({
             type: "error",
@@ -54,11 +57,11 @@ const TransactionsScreen = () => {
     useMemo(() => {
         switch (activeFilter) {
             case TRANSACTIONS_FILTER.PAY:
-                return setActiveTransactions(allProjects.filter(project => project.total > 0));
+                return setActiveTransactions(allTransactions.filter(Transaction => Transaction.type === TRANSACTION_TYPE.PAY));
             case TRANSACTIONS_FILTER.RECEIPT:
-                return setActiveTransactions(allProjects.filter(project => project.total < 0));
+                return setActiveTransactions(allTransactions.filter(Transaction => Transaction.type === TRANSACTION_TYPE.RECEIPT));
             default:
-                return setActiveTransactions(allProjects);
+                return setActiveTransactions(allTransactions);
         }
     }, [activeFilter]);
 
@@ -76,29 +79,32 @@ const TransactionsScreen = () => {
             {loading ? (
                 <MainLoading />
             ) : (
-                <ScrollView style={styles.transactionsWrapper}>
+                // <View style={styles.transactionsWrapper}>
+                <ScrollView style={styles.wrapper}>
 
                     {activeTransactions.length ? (
-                        activeTransactions.map((projectData, index) => (
-                            <View key={index} style={styles.card_wrapper}>
-                                <SingleCard projectData={projectData} />
-                            </View>
+                        activeTransactions.map((item, index) => (
+                            <Fragment key={index}>
+                                <SingleTransaction transaction={item} />
+                                <MainDivider />
+                            </Fragment>
                         ))
                     ) : activeFilter !== TRANSACTIONS_FILTER.ALL ? (
                         <View style={{ paddingTop: 20 }}>
                             <CustomText>
-                                {t("project_not_found_by_filter")}
+                                {t("transaction_not_found_by_filter")}
                             </CustomText>
                         </View>
                     ) : (
                         <View style={{ paddingTop: 20 }}>
                             <CustomText>
-                                {t("project_not_found")}
+                                {t("transaction_not_found")}
                             </CustomText>
                         </View>
                     )}
 
                 </ScrollView>
+                // </View>
             )}
 
             {/* Create a new transaction btn */}
@@ -119,10 +125,10 @@ const styles = StyleSheet.create({
     transactionsWrapper: {
         flex: 1,
     },
-    card_wrapper: {
+    wrapper: {
         backgroundColor: VARIABLES.WHITE_COLOR,
         borderRadius: 15,
-        minWidth: "100%",
+        width: "100%",
         marginTop: 10
     }
 });

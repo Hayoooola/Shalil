@@ -49,5 +49,9 @@
     "transaction_value_error": "مبلغی وارد نشده!",
     "transaction_account_error": "حسابی انتخاب نشده!",
     "create_transaction_success_message": "تراکنش با موفقیت ثبت شد",
-    "create_transaction_error_message": "مشکلی در ثبت تراکنش به وجود آمده!"
+    "create_transaction_error_message": "مشکلی در ثبت تراکنش به وجود آمده!",
+    "transaction_not_found_by_filter": "هیچ تراکنشی با این فیلتر وجود ندارد!",
+    "transaction_not_found": "هنوز تراکنشی ثبت نشده!",
+    "to_account": "به حساب: ",
+    "from_account": "از حساب: "
 }

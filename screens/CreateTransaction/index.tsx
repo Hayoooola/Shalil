@@ -117,7 +117,7 @@ const CreateTransactionScreen = () => {
                 type: transactionType,
                 value: Number(value),
                 account,
-                note,
+                note: note.trim(),
                 imageUri: null,
                 date_of_create: now,
                 last_update: date
@@ -252,7 +252,6 @@ const CreateTransactionScreen = () => {
                     style={[featuredStyles.input, styles.note]}
                     value={note}
                     onChangeText={setNote}
-                    numberOfLines={4}
                 />
 
                 {/* -------------- Add_Receipt_image -------------- */}
