@@ -1,6 +1,6 @@
 import { Fragment, useCallback, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
@@ -41,7 +41,7 @@ const TransactionsScreen = () => {
 
     // Update initial Transactions to show
     useMemo(() => {
-        allTransactions.length && setActiveTransactions(sortTransactions(allTransactions));
+        allTransactions && setActiveTransactions(sortTransactions(allTransactions));
     }, [allTransactions]);
 
     // Handle show error toast in case of Un-Successful loading Transactions
@@ -79,7 +79,6 @@ const TransactionsScreen = () => {
             {loading ? (
                 <MainLoading />
             ) : (
-                // <View style={styles.transactionsWrapper}>
                 <ScrollView style={styles.wrapper}>
 
                     {activeTransactions.length ? (
@@ -90,13 +89,13 @@ const TransactionsScreen = () => {
                             </Fragment>
                         ))
                     ) : activeFilter !== TRANSACTIONS_FILTER.ALL ? (
-                        <View style={{ paddingTop: 20 }}>
+                        <View style={styles.filter_text}>
                             <CustomText>
                                 {t("transaction_not_found_by_filter")}
                             </CustomText>
                         </View>
                     ) : (
-                        <View style={{ paddingTop: 20 }}>
+                        <View style={styles.filter_text}>
                             <CustomText>
                                 {t("transaction_not_found")}
                             </CustomText>
@@ -104,7 +103,6 @@ const TransactionsScreen = () => {
                     )}
 
                 </ScrollView>
-                // </View>
             )}
 
             {/* Create a new transaction btn */}
@@ -130,5 +128,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         width: "100%",
         marginTop: 10
+    },
+    filter_text: {
+        paddingTop: 20,
+        alignItems: "center"
     }
 });

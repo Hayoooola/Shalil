@@ -6,14 +6,14 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 
 import { IAccountInTransaction } from '../../../interfaces/transactions';
-import IProject from '../../../interfaces/accounts';
+import IAccount from '../../../interfaces/accounts';
 import VARIABLES from '../../../enums/variables';
 import ACCOUNT_TYPE from '../../../enums/account_type';
 
 interface IProps {
     account: IAccountInTransaction | null;
     setAccount: Dispatch<SetStateAction<IAccountInTransaction | null>>;
-    accounts: IProject[];
+    accounts: IAccount[];
 }
 
 
@@ -23,7 +23,7 @@ const SelectAccount: FC<IProps> = ({ account, setAccount, accounts }) => {
     const { t } = useTranslation();
 
     // Handle select account
-    const selectAccountHandler = (account: IProject) => {
+    const selectAccountHandler = (account: IAccount) => {
         const { id, account_type, title, imageUri } = account;
 
         const newAccount: IAccountInTransaction = {
@@ -42,6 +42,7 @@ const SelectAccount: FC<IProps> = ({ account, setAccount, accounts }) => {
         <SelectDropdown
             data={accounts}
             onSelect={(selectedItem) => selectAccountHandler(selectedItem)}
+            defaultValueByIndex={accounts.findIndex(item => item.id === account?.id)}
             renderButton={(selectedItem, isOpened) => {
                 return (
                     <View style={styles.dropdownButtonStyle}>

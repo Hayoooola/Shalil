@@ -2,19 +2,58 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { IAccountReducer } from "../../interfaces/store";
+import ITransaction from "../../interfaces/transactions";
+import TRANSACTION_TYPE from "../../enums/transaction_type";
+import IAccount from "../../interfaces/accounts";
 
 
 // ---------------------! Actions !--------------------- //
 // Fetch all Accounts
 export const fetchAccounts = createAsyncThunk(
-    "Projects/fetchAccounts",
+    "Accounts/fetchAccounts",
     async (params, { rejectWithValue }) => {
         try {
-            const storedProjects = await AsyncStorage.getItem("accounts");
-            const allProjects = storedProjects ? JSON.parse(storedProjects) : [];
+            const storedAccounts = await AsyncStorage.getItem("accounts");
+            const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];
 
-            return allProjects;
+            // const newAccounts = allAccounts.map(item => ({ ...item, total: 0 }));
+            // await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
 
+            return allAccounts;
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+// Update Accounts by deleting a transaction
+export const updateAccountsByDeleteTransaction = createAsyncThunk(
+    "Accounts/UpdateAccountsByDeleteTransaction",
+    async (params: ITransaction, { rejectWithValue }) => {
+        try {
+            const storedAccounts = await AsyncStorage.getItem("accounts");
+            const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];
+
+            const selectedAccount = allAccounts.find(item => item.id === params.account.id);
+
+            const prevAccountTotal = selectedAccount.total || 0;
+
+            // Update total value to be calculated in account_total)
+            const UpdateAccountTotal: number = params.type === TRANSACTION_TYPE.PAY ?
+                (Number(prevAccountTotal) + Number(params.value)) :
+                (Number(prevAccountTotal) - Number(params.value));
+
+
+            const updatedAccount: IAccount = {
+                ...selectedAccount,
+                last_update: Date.now(),
+                total: UpdateAccountTotal,
+            };
+
+            const newAccounts = allAccounts.filter(item => item.id !== params.account.id).concat(updatedAccount);
+
+            await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
         } catch (err) {
             return rejectWithValue("failed_to_load_data");
         }

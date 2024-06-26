@@ -1,10 +1,11 @@
 import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import * as ImagePicker from 'expo-image-picker';
 import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../../features/styles';
@@ -20,6 +21,7 @@ interface IProps {
 // Add receipt image to create_new_transaction screen
 const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
     const [isSelectImageModalOpen, setIsSelectImageModalOpen] = useState(false);
+    const [isImageFullSize, setIsImageFullSize] = useState(false);
 
     const { t } = useTranslation();
 
@@ -79,6 +81,10 @@ const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
     // Handle remove image
     const handleRemoveImage = () => setImageUri(null);
 
+    // Handle full_screen image
+    const handleOpenFullScreenMode = () => setIsImageFullSize(true);
+    const handleCloseFullScreenMode = () => setIsImageFullSize(false);
+
 
 
     return (
@@ -99,6 +105,14 @@ const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
                             </TouchableOpacity>
                         </View>
 
+
+                        {/* ----- Zoom_btn ----- */}
+                        <View style={styles.zoom_btn_wrapper}>
+                            <TouchableOpacity onPress={handleOpenFullScreenMode}>
+                                <MaterialCommunityIcons name="magnify-expand" size={30} color={VARIABLES.WHITE_COLOR} />
+                            </TouchableOpacity>
+                        </View>
+
                     </View>
                 </View>
             ) : null}
@@ -107,14 +121,18 @@ const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
             <Menu
                 visible={isSelectImageModalOpen}
                 anchor={
-                    <TouchableOpacity onPress={showMenu}>
-                        <View style={styles.select_image_wrapper}>
-                            <Text style={[featuredStyles.text, { fontSize: 16 }]}>
-                                {t("select_receipt_image")}
-                            </Text>
-                            <MaterialIcons name="add-a-photo" size={32} color={VARIABLES.GRAY_COLOR} />
-                        </View>
-                    </TouchableOpacity>
+                    imageUri ? (
+                        null
+                    ) : (
+                        <TouchableOpacity onPress={showMenu}>
+                            <View style={styles.select_image_wrapper}>
+                                <Text style={[featuredStyles.text, { fontSize: 16 }]}>
+                                    {t("select_receipt_image")}
+                                </Text>
+                                <MaterialIcons name="add-a-photo" size={32} color={VARIABLES.GRAY_COLOR} />
+                            </View>
+                        </TouchableOpacity>
+                    )
                 }
                 onRequestClose={hideMenu}
             >
@@ -152,6 +170,29 @@ const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
             </Menu>
 
 
+            {/* ----------------- Full_screen Image modal ----------------- */}
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={isImageFullSize}
+            >
+                <View style={{ flex: 1, backgroundColor: "#fff" }}>
+
+                    {/* ----- Image ----- */}
+                    <Image
+                        source={{ uri: imageUri }}
+                        resizeMode="cover"
+                        style={styles.full_screen}
+                    />
+
+                    {/* ----- Cancel_btn ----- */}
+                    <View style={styles.full_screen_cancel_btn}>
+                        <TouchableOpacity onPress={handleCloseFullScreenMode}>
+                            <Ionicons name="close-circle" size={32} color={VARIABLES.PRIMARY_COLOR_DARK} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </Modal>
 
         </View>
     );
@@ -167,8 +208,8 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     avatar: {
-        width: 74,
-        height: 74,
+        width: 264,
+        height: 264,
         borderRadius: 10,
         justifyContent: "center",
         alignItems: "center"
@@ -193,5 +234,19 @@ const styles = StyleSheet.create({
         position: "absolute",
         left: -14,
         top: -14
+    },
+    zoom_btn_wrapper: {
+        position: "absolute",
+        right: 4,
+        top: 4,
+    },
+    full_screen: {
+        width: '100%',
+        height: '100%',
+    },
+    full_screen_cancel_btn: {
+        position: "absolute",
+        left: 15,
+        top: 15
     }
 });

@@ -14,8 +14,11 @@ import AddReceiptImage from './add_receipt_image';
 import SelectAccount from './select_account';
 import MainDatePicker from '../../components/DatePicker';
 import MainActionButton from '../../components/ActionButton';
+import DeleteTransaction from './delete_btn';
 import { fetchAccounts } from '../../store/reducers/accounts';
+import { createNewTransaction, editTransaction } from '../../store/reducers/transactions';
 import featuredStyles from '../../features/styles';
+import handleConvertToNumber from '../../features/convert_to_number';
 import ITransaction, { IAccountInTransaction } from '../../interfaces/transactions';
 import IStore from '../../interfaces/store';
 import IAccount from '../../interfaces/accounts';
@@ -24,7 +27,7 @@ import VARIABLES from '../../enums/variables';
 
 
 // Provides Create new Transaction page
-const CreateTransactionScreen = () => {
+const CreateTransactionScreen = ({ route }) => {
     const [value, setValue] = useState("");
     const [transactionType, setTransactionType] = useState(TRANSACTION_TYPE.PAY);
     const [account, setAccount] = useState<IAccountInTransaction | null>(null);
@@ -38,6 +41,9 @@ const CreateTransactionScreen = () => {
     const dispatch = useDispatch();
 
     const { t } = useTranslation();
+
+    const params = route.params;
+    const currentTransaction: ITransaction | undefined = params ? params.currentTransaction : undefined;
 
     const { data: allAccount, error } = useSelector((store: IStore) => store.accounts);
 
@@ -53,6 +59,19 @@ const CreateTransactionScreen = () => {
     useMemo(() => {
         allAccount.length && setAccounts(allAccount);
     }, [allAccount]);
+
+    // Update update initial transaction info in case of updating a transaction
+    useMemo(() => {
+        if (currentTransaction) {
+            setValue((currentTransaction.value || 0).toLocaleString());
+            setTransactionType(currentTransaction.type);
+            setDate(currentTransaction.last_update);
+            setImageUri(currentTransaction.imageUri);
+            setNote(currentTransaction.note);
+        }
+
+        (currentTransaction && allAccount) && setAccount(currentTransaction.account);
+    }, [currentTransaction, allAccount]);
 
     // Handle show error toast in case of Un-Successful loading Accounts
     useMemo(() => {
@@ -84,15 +103,23 @@ const CreateTransactionScreen = () => {
     };
 
 
-    // Handle update account detail
+    // Handle update account detail by adding transaction
     const handleUpdateAccount = async () => {
         const selectedAccount = accounts.find(item => item.id === account.id);
 
         const prevAccountTotal = selectedAccount.total || 0;
+        const inputValue = handleConvertToNumber(value);
+
+        // Update total value to be calculated in account_total (it is useful in case of updating a transaction)
+        const updatedPrevTotal: number = currentTransaction ?
+            currentTransaction.type === TRANSACTION_TYPE.RECEIPT ?
+                (prevAccountTotal - Number(currentTransaction.value)) :
+                (prevAccountTotal + Number(currentTransaction.value)) :
+            prevAccountTotal;
 
         const UpdateAccountTotal = transactionType === TRANSACTION_TYPE.PAY ?
-            Number(prevAccountTotal - (+value)) :
-            Number(prevAccountTotal + (+value));
+            Number(updatedPrevTotal - inputValue) :
+            Number(updatedPrevTotal + inputValue);
 
         const updatedAccount: IAccount = {
             ...selectedAccount,
@@ -113,13 +140,13 @@ const CreateTransactionScreen = () => {
             const now = Date.now();
 
             const newTransaction: ITransaction = {
-                id: uuid.v4(),
+                id: currentTransaction ? currentTransaction.id : uuid.v4(),
                 type: transactionType,
-                value: Number(value),
+                value: handleConvertToNumber(value),
                 account,
                 note: note.trim(),
                 imageUri: null,
-                date_of_create: now,
+                date_of_create: currentTransaction ? currentTransaction.date_of_create : now,
                 last_update: date
             };
 
@@ -157,20 +184,15 @@ const CreateTransactionScreen = () => {
 
             // Storing data using AsyncStorage
             try {
-                // Get prev transactions data
-                const prevTransactions = await AsyncStorage.getItem("transactions");
-                const transactions: ITransaction[] = prevTransactions ? JSON.parse(prevTransactions) : [];
 
-                // Prepare transactions to store
-                transactions.push(newTransaction);
-
-                // Store transactions to the store
-                await AsyncStorage.setItem("transactions", JSON.stringify(transactions));
+                // Handle Create/Update transaction
+                // @ts-ignore
+                currentTransaction ? dispatch(editTransaction(newTransaction)) : dispatch(createNewTransaction(newTransaction));
 
                 // Show Success toast
                 Toast.show({
                     type: 'success',
-                    text2: t("create_transaction_success_message")
+                    text2: currentTransaction ? t("edit_transaction_success_message") : t("create_transaction_success_message")
                 });
 
                 // Update account detail
@@ -187,6 +209,22 @@ const CreateTransactionScreen = () => {
         }
     };
 
+    // Handle change input
+    const handleChange = (text) => {
+        if (text) {
+            // Parse the input to a number
+            const numberValue = parseFloat(text.replace(/,/g, ''));
+
+            // Format the number with thousand separator
+            const formattedValue = numberValue.toLocaleString();
+
+            setValue(formattedValue);
+        } else {
+
+            setValue("");
+        }
+    };
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -200,7 +238,7 @@ const CreateTransactionScreen = () => {
                     style={featuredStyles.input}
                     inputMode="numeric"
                     value={value}
-                    onChangeText={setValue}
+                    onChangeText={handleChange}
                     placeholderTextColor={VARIABLES.GRAY_COLOR}
                 />
 
@@ -259,11 +297,16 @@ const CreateTransactionScreen = () => {
 
                 {/* -------------- Finish Button -------------- */}
                 <MainActionButton
-                    text={t("add")}
+                    text={currentTransaction ? t("submit_changes") : t("add")}
                     type='primary'
-                    icon={<Entypo name="plus" size={22} color={VARIABLES.WHITE_COLOR} />}
+                    icon={currentTransaction ? null : <Entypo name="plus" size={22} color={VARIABLES.WHITE_COLOR} />}
                     onPress={handleSubmit}
                 />
+
+                {/* -------------- Delete Button -------------- */}
+                {currentTransaction ? (
+                    <DeleteTransaction transaction={currentTransaction} />
+                ) : null}
 
             </ScrollView>
         </View>
@@ -275,7 +318,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 25,
-        paddingVertical: 15,
+        paddingBottom: 20
     },
     title: {
         fontFamily: "vazir",

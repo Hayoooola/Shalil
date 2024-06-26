@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { ITransactionReducer } from "../../interfaces/store";
+import ITransaction from "../../interfaces/transactions";
 
 
 // ---------------------! Actions !--------------------- //
@@ -21,6 +22,67 @@ export const fetchTransactions = createAsyncThunk(
     }
 );
 
+// Create new transaction
+export const createNewTransaction = createAsyncThunk(
+    "Accounts/createNewTransaction",
+    async (params: ITransaction, { rejectWithValue }) => {
+        try {
+            // Get prev transactions data
+            const prevTransactions = await AsyncStorage.getItem("transactions");
+            const transactions: ITransaction[] = prevTransactions ? JSON.parse(prevTransactions) : [];
+
+            const newTransactions = transactions.concat(params);
+
+            // Store transactions to the store
+            await AsyncStorage.setItem("transactions", JSON.stringify(newTransactions));
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+// Edit a transaction
+export const editTransaction = createAsyncThunk(
+    "Accounts/editTransaction",
+    async (params: ITransaction, { rejectWithValue }) => {
+        try {
+            // Get prev transactions data
+            const prevTransactions = await AsyncStorage.getItem("transactions");
+            const transactions: ITransaction[] = prevTransactions ? JSON.parse(prevTransactions) : [];
+
+            const filteredTransactions = transactions.filter(item => item.id !== params.id);
+            const newTransactions = filteredTransactions.concat(params);
+
+            // Store transactions to the store
+            await AsyncStorage.setItem("transactions", JSON.stringify(newTransactions));
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+// Delete transaction
+export const deleteTransaction = createAsyncThunk(
+    "Accounts/deleteTransaction",
+    async (params: string | number[], { rejectWithValue }) => {
+        try {
+            // Get prev transactions data
+            const prevTransactions = await AsyncStorage.getItem("transactions");
+            const transactions: ITransaction[] = prevTransactions ? JSON.parse(prevTransactions) : [];
+
+            // Prepare transactions to store
+            const filteredTransactions = transactions.filter(item => item.id !== params);
+
+            // Store transactions to the store
+            await AsyncStorage.setItem("transactions", JSON.stringify(filteredTransactions));
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
 
 
 // ---------------------! Reducers !--------------------- //

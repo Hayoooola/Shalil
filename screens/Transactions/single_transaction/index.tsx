@@ -4,10 +4,11 @@ import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useTranslation } from 'react-i18next';
 
+import featuredStyles from '../../../features/styles';
 import ITransaction from '../../../interfaces/transactions';
 import VARIABLES from '../../../enums/variables';
 import TRANSACTION_TYPE from '../../../enums/transaction_type';
-import featuredStyles from '../../../features/styles';
+import { useNavigation } from '@react-navigation/native';
 
 interface IProps {
     transaction: ITransaction;
@@ -19,12 +20,18 @@ const SingleTransaction: FC<IProps> = ({ transaction }) => {
 
     const { t } = useTranslation();
 
+    const navigate = useNavigation<any>();
+
     // Handle calculate and show total
     const handleCalculateTotal = () => (
         transaction.type === TRANSACTION_TYPE.RECEIPT ?
-            (`${(transaction.value).toLocaleString("fa")} ${t("currency")} +`) :
-            (`${(transaction.value).toLocaleString("fa")} ${t("currency")} -`)
+            (`${(transaction.value || 0).toLocaleString("fa")} ${t("currency")} +`) :
+            (`${(transaction.value || 0).toLocaleString("fa")} ${t("currency")} -`)
     );
+
+    // Handle Click on Action btn
+    const handleClick = () => navigate.navigate(t("add_transaction"), { currentTransaction: transaction });
+
 
     return (
         <View style={styles.container}>
@@ -58,7 +65,7 @@ const SingleTransaction: FC<IProps> = ({ transaction }) => {
                             {`${transaction.type === TRANSACTION_TYPE.PAY ? t("from_account") : t("to_account")} ${transaction.account.title}`}
                         </Text>
                         {/* Action_btn */}
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={handleClick}>
                             <AntDesign name="edit" size={26} color={VARIABLES.PRIMARY_COLOR_DARK} />
                         </TouchableOpacity>
                     </View>

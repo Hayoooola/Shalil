@@ -49,9 +49,18 @@
     "transaction_value_error": "مبلغی وارد نشده!",
     "transaction_account_error": "حسابی انتخاب نشده!",
     "create_transaction_success_message": "تراکنش با موفقیت ثبت شد",
+    "edit_transaction_success_message": "تراکنش با موفقیت ویرایش شد",
     "create_transaction_error_message": "مشکلی در ثبت تراکنش به وجود آمده!",
     "transaction_not_found_by_filter": "هیچ تراکنشی با این فیلتر وجود ندارد!",
     "transaction_not_found": "هنوز تراکنشی ثبت نشده!",
     "to_account": "به حساب: ",
-    "from_account": "از حساب: "
+    "from_account": "از حساب: ",
+    "submit": "ثبت",
+    "submit_changes": "ثبت تغییرات",
+    "edit_transaction": "ویرایش تراکنش",
+    "delete_transaction": "حذف تراکنش",
+    "delete_transaction_alert": "آیا مایل به حذف تراکنش هستید؟",
+    "delete_transaction_message": "با حذف تراکنش تمامی اطلاعات مربوط به آن تراکنش هم حذف خواهد شد",
+    "delete_transaction_failed": "مشکلی در حذف تراکنش بوجود آمده!",
+    "delete_transaction_success": "حذف تراکنش با موفقیت انجام شد"
 }

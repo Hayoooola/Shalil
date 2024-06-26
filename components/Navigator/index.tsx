@@ -54,11 +54,12 @@ const MainNavigator = () => {
                 <Stack.Screen
                     name={t("add_transaction")}
                     component={CreateTransactionScreen}
-
-                    options={{
+                    options={({ route }) => ({
+                        // @ts-ignore
+                        title: route.params?.currentTransaction ? t("edit_transaction") : t("add_transaction"),
                         headerBackTitleVisible: false,
                         headerBackground: () => <MainGradient />,
-                    }}
+                    })}
                 />
 
             </Stack.Navigator>

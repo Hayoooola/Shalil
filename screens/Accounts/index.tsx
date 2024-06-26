@@ -9,13 +9,13 @@ import featuredStyles from '../../features/styles';
 import Filters from './filters';
 import CreateNewAccountBtn from '../Dashboard/review/add_account_btn';
 import SingleCard from '../Dashboard/review/single-card';
+import CustomText from '../../components/Text';
+import MainLoading from '../../components/Loading';
 import { fetchAccounts } from '../../store/reducers/accounts';
 import IStore from '../../interfaces/store';
 import IAccount from '../../interfaces/accounts';
-import MainLoading from '../../components/Loading';
 import STATUS_FILTER from '../../enums/status_filter';
 import VARIABLES from '../../enums/variables';
-import CustomText from '../../components/Text';
 
 
 const AccountsScreen = () => {
