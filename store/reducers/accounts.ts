@@ -12,6 +12,7 @@ import TRANSACTION_TYPE from "../../enums/transaction_type";
 export const fetchAccounts = createAsyncThunk(
     "Accounts/fetchAccounts",
     async (params, { rejectWithValue }) => {
+
         try {
             const storedAccounts = await AsyncStorage.getItem("accounts");
             const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];

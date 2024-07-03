@@ -39,16 +39,12 @@ const SingleTransaction: FC<IProps> = ({ transaction, accountData }) => {
         <View style={styles.container}>
             <View style={styles.wrapper}>
 
-                {/* -------- Project-Avatar -------- */}
+                {/* -------- Transaction-Avatar -------- */}
                 <View style={[styles.avatar_wrapper, featuredStyles.shadow]}>
-                    {transaction.imageUri ? (
-                        <Image source={{ uri: transaction.imageUri }} width={40} height={40} borderRadius={10} />
+                    {transaction.type === TRANSACTION_TYPE.PAY ? (
+                        <Entypo name="emoji-neutral" size={26} color={VARIABLES.RED_COLOR} />
                     ) : (
-                        transaction.type === TRANSACTION_TYPE.PAY ? (
-                            <Entypo name="emoji-neutral" size={26} color={VARIABLES.RED_COLOR} />
-                        ) : (
-                            <Entypo name="emoji-happy" size={26} color={VARIABLES.SECONDARY_COLOR_DARK} />
-                        )
+                        <Entypo name="emoji-happy" size={26} color={VARIABLES.SECONDARY_COLOR_DARK} />
                     )}
                 </View>
 

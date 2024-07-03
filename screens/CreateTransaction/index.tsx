@@ -24,6 +24,7 @@ import IStore from '../../interfaces/store';
 import IAccount from '../../interfaces/accounts';
 import TRANSACTION_TYPE from '../../enums/transaction_type';
 import VARIABLES from '../../enums/variables';
+import ACCOUNT_TYPE from '../../enums/account_type';
 
 
 // Provides Create new Transaction page
@@ -42,6 +43,17 @@ const CreateTransactionScreen = ({ route }) => {
 
     const { t } = useTranslation();
 
+    const createAccountObject: IAccount = {
+        id: "-1",
+        account_type: ACCOUNT_TYPE.PERSONAL,
+        date_of_create: Date.now(),
+        imageUri: null,
+        last_update: Date.now(),
+        note: "",
+        title: t("add_account"),
+        total: 0
+    };
+
     const params = route.params;
     const currentTransaction: ITransaction | undefined = params ? params.currentTransaction : undefined;
     const accountData: IAccount | undefined = params ? params.accountData : undefined;
@@ -58,7 +70,9 @@ const CreateTransactionScreen = ({ route }) => {
 
     // Update Accounts to show
     useMemo(() => {
-        allAccount.length && setAccounts(allAccount);
+        allAccount.length ?
+            setAccounts([...allAccount, createAccountObject]) :
+            setAccounts([createAccountObject]);
     }, [allAccount]);
 
     // Update update initial transaction info in case of updating a transaction
@@ -129,7 +143,9 @@ const CreateTransactionScreen = ({ route }) => {
             total: UpdateAccountTotal,
         };
 
-        const newAccounts = accounts.filter(item => item.id !== account.id).concat(updatedAccount);
+        const newAccounts = accounts
+            .filter(item => (item.id !== account.id) && (item.id !== createAccountObject.id))
+            .concat(updatedAccount);
 
         await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
     };

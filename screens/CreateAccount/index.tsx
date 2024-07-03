@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { FC, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -16,9 +16,14 @@ import IAccount from '../../interfaces/accounts';
 import VARIABLES from '../../enums/variables';
 import ACCOUNT_TYPE from '../../enums/account_type';
 
+interface IProps {
+    route: any;
+    onFinish?: (newAccount: IAccount) => Promise<void>;
+}
+
 
 // Provides Create new Account page
-const CreateAccountScreen = ({ route }) => {
+const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
     const [title, setTitle] = useState("");
     const [accountType, setAccountType] = useState(ACCOUNT_TYPE.PERSONAL);
     const [imageUri, setImageUri] = useState<string | null>(null);
@@ -103,7 +108,7 @@ const CreateAccountScreen = ({ route }) => {
             });
 
             // Redirect user to Account page
-            navigation.navigate(t("accounts"));
+            onFinish ? onFinish(newAccount) : navigation.navigate(t("accounts"));
 
         } catch (err) {
 
