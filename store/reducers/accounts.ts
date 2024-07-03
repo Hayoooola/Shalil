@@ -3,8 +3,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { IAccountReducer } from "../../interfaces/store";
 import ITransaction from "../../interfaces/transactions";
-import TRANSACTION_TYPE from "../../enums/transaction_type";
 import IAccount from "../../interfaces/accounts";
+import TRANSACTION_TYPE from "../../enums/transaction_type";
 
 
 // ---------------------! Actions !--------------------- //
@@ -16,10 +16,69 @@ export const fetchAccounts = createAsyncThunk(
             const storedAccounts = await AsyncStorage.getItem("accounts");
             const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];
 
-            // const newAccounts = allAccounts.map(item => ({ ...item, total: 0 }));
-            // await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
+            return allAccounts;
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+// Create new Accounts
+export const createAccount = createAsyncThunk(
+    "Accounts/fetchAccounts",
+    async (params: IAccount, { rejectWithValue }) => {
+        try {
+            const storedAccounts = await AsyncStorage.getItem("accounts");
+            const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];
+
+            const newAccounts = allAccounts.concat(params);
+
+            await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
 
             return allAccounts;
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+// Edit Accounts
+export const editAccount = createAsyncThunk(
+    "Accounts/fetchAccounts",
+    async (params: IAccount, { rejectWithValue }) => {
+        try {
+            const storedAccounts = await AsyncStorage.getItem("accounts");
+            const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];
+
+            const filteredAccount = allAccounts.filter(item => item.id !== params.id);
+
+            const newAccounts = filteredAccount.concat(params);
+
+            console.log(allAccounts.length, filteredAccount.length, newAccounts.length, allAccounts.map(item => item.id), params.id);
+
+            await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
+
+            return allAccounts;
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+// Delete account
+export const deleteAccount = createAsyncThunk(
+    "Accounts/fetchAccounts",
+    async (params: IAccount, { rejectWithValue }) => {
+        try {
+            const storedAccounts = await AsyncStorage.getItem("accounts");
+            const allAccounts = storedAccounts ? JSON.parse(storedAccounts) : [];
+
+            const filteredAccount = allAccounts.filter(item => item.id !== params.id);
+
+            await AsyncStorage.setItem("accounts", JSON.stringify(filteredAccount));
 
         } catch (err) {
             return rejectWithValue("failed_to_load_data");

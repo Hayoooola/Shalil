@@ -1,22 +1,24 @@
 import { FC } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../../features/styles';
 import ITransaction from '../../../interfaces/transactions';
+import IAccount from '../../../interfaces/accounts';
 import VARIABLES from '../../../enums/variables';
 import TRANSACTION_TYPE from '../../../enums/transaction_type';
-import { useNavigation } from '@react-navigation/native';
 
 interface IProps {
     transaction: ITransaction;
+    accountData?: IAccount | undefined;
 }
 
 
 // Provides single transaction in transactions screen
-const SingleTransaction: FC<IProps> = ({ transaction }) => {
+const SingleTransaction: FC<IProps> = ({ transaction, accountData }) => {
 
     const { t } = useTranslation();
 
@@ -30,7 +32,7 @@ const SingleTransaction: FC<IProps> = ({ transaction }) => {
     );
 
     // Handle Click on Action btn
-    const handleClick = () => navigate.navigate(t("add_transaction"), { currentTransaction: transaction });
+    const handleClick = () => navigate.navigate(t("add_transaction"), { currentTransaction: transaction, accountData });
 
 
     return (

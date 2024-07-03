@@ -12,6 +12,7 @@ import SingleCard from '../Dashboard/review/single-card';
 import CustomText from '../../components/Text';
 import MainLoading from '../../components/Loading';
 import { fetchAccounts } from '../../store/reducers/accounts';
+import { sortAccounts } from '../../features/sort';
 import IStore from '../../interfaces/store';
 import IAccount from '../../interfaces/accounts';
 import STATUS_FILTER from '../../enums/status_filter';
@@ -38,7 +39,7 @@ const AccountsScreen = () => {
 
     // Update initial Accounts to show
     useMemo(() => {
-        allAccounts.length && setActiveAccounts(allAccounts);
+        allAccounts && setActiveAccounts(sortAccounts(allAccounts));
     }, [allAccounts]);
 
     // Handle show error toast in case of Un-Successful loading Accounts
@@ -54,9 +55,9 @@ const AccountsScreen = () => {
     useMemo(() => {
         switch (activeFilter) {
             case STATUS_FILTER.CREDITOR:
-                return setActiveAccounts(allAccounts.filter(project => project.total > 0));
+                return setActiveAccounts(allAccounts.filter(account => account.total > 0));
             case STATUS_FILTER.DEBTOR:
-                return setActiveAccounts(allAccounts.filter(project => project.total < 0));
+                return setActiveAccounts(allAccounts.filter(account => account.total < 0));
             default:
                 return setActiveAccounts(allAccounts);
         }
@@ -79,21 +80,21 @@ const AccountsScreen = () => {
                 <ScrollView style={styles.accountsWrapper}>
 
                     {activeAccounts.length ? (
-                        activeAccounts.map((projectData, index) => (
+                        activeAccounts.map((accountData, index) => (
                             <View key={index} style={styles.card_wrapper}>
-                                <SingleCard projectData={projectData} />
+                                <SingleCard accountData={accountData} />
                             </View>
                         ))
                     ) : activeFilter !== STATUS_FILTER.ALL ? (
                         <View style={{ paddingTop: 20 }}>
                             <CustomText>
-                                {t("project_not_found_by_filter")}
+                                {t("account_not_found_by_filter")}
                             </CustomText>
                         </View>
                     ) : (
                         <View style={{ paddingTop: 20 }}>
                             <CustomText>
-                                {t("project_not_found")}
+                                {t("account_not_found")}
                             </CustomText>
                         </View>
                     )}

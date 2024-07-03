@@ -1,19 +1,25 @@
+import { FC } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useTranslation } from 'react-i18next';
 
 import MainActionButton from '../../../components/ActionButton';
 import VARIABLES from '../../../enums/variables';
+import IAccount from '../../../interfaces/accounts';
+
+interface IProps {
+    accountData?: IAccount;
+}
 
 
 // Provides a btn navigate user to create a new Transaction
-const CreateNewTransactionBtn = () => {
+const CreateNewTransactionBtn: FC<IProps> = ({ accountData }) => {
     const { t } = useTranslation();
 
     const navigation = useNavigation<any>();
 
     // Handle click on create a new Transaction btn
-    const handlePress = () => navigation.navigate(t("add_transaction"));
+    const handlePress = () => navigation.navigate(t("add_transaction"), { accountData });
 
 
     return (

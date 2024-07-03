@@ -8,6 +8,7 @@ import CreateAccountScreen from '../../screens/CreateAccount';
 import CreateTransactionScreen from '../../screens/CreateTransaction';
 import MainGradient from '../Gradient';
 import VARIABLES from '../../enums/variables';
+import AccountDetail from '../../screens/AccountDetail';
 
 
 const MainNavigator = () => {
@@ -57,6 +58,17 @@ const MainNavigator = () => {
                     options={({ route }) => ({
                         // @ts-ignore
                         title: route.params?.currentTransaction ? t("edit_transaction") : t("add_transaction"),
+                        headerBackTitleVisible: false,
+                        headerBackground: () => <MainGradient />,
+                    })}
+                />
+                {/* Single account detail page */}
+                <Stack.Screen
+                    name={t("account_detail")}
+                    component={AccountDetail}
+                    options={({ route }) => ({
+                        // @ts-ignore
+                        title: route.params?.accountData ? route.params?.accountData.title : t("account_detail"),
                         headerBackTitleVisible: false,
                         headerBackground: () => <MainGradient />,
                     })}

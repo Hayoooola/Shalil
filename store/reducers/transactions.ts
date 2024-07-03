@@ -9,12 +9,17 @@ import ITransaction from "../../interfaces/transactions";
 // Fetch all Transactions
 export const fetchTransactions = createAsyncThunk(
     "Accounts/fetchTransactions",
-    async (params, { rejectWithValue }) => {
+    async (params: string | number[] | undefined, { rejectWithValue }) => {
         try {
             const storedTransactions = await AsyncStorage.getItem("transactions");
             const allTransactions = storedTransactions ? JSON.parse(storedTransactions) : [];
 
-            return allTransactions;
+            if (params) {
+                return allTransactions.filter(item => item.account.id === params);
+
+            } else {
+                return allTransactions;
+            }
 
         } catch (err) {
             return rejectWithValue("failed_to_load_data");
@@ -83,6 +88,28 @@ export const deleteTransaction = createAsyncThunk(
         }
     }
 );
+// Delete transaction
+export const deleteAccountsTransaction = createAsyncThunk(
+    "Accounts/deleteTransaction",
+    async (params: string | number[], { rejectWithValue }) => {
+        try {
+            // Get prev transactions data
+            const prevTransactions = await AsyncStorage.getItem("transactions");
+            const transactions: ITransaction[] = prevTransactions ? JSON.parse(prevTransactions) : [];
+
+            const filteredTransactions = transactions.filter(item => item.account.id !== params);
+
+            // Store transactions to the store
+            await AsyncStorage.setItem("transactions", JSON.stringify(filteredTransactions));
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
+
+
+
 
 
 // ---------------------! Reducers !--------------------- //

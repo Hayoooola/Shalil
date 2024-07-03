@@ -1,23 +1,24 @@
+import { useMemo, useState } from 'react';
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as FileSystem from 'expo-file-system';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import uuid from 'react-native-uuid';
+import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 
+import Avatar from './Avatar';
+import MainActionButton from '../../components/ActionButton';
+import { createAccount, editAccount } from '../../store/reducers/accounts';
 import featuredStyles from '../../features/styles';
-import { useTranslation } from 'react-i18next';
+import IAccount from '../../interfaces/accounts';
 import VARIABLES from '../../enums/variables';
 import ACCOUNT_TYPE from '../../enums/account_type';
-import Avatar from './Avatar';
-import MainGradient from '../../components/Gradient';
-import IAccount from '../../interfaces/accounts';
 
 
 // Provides Create new Account page
-const CreateAccountScreen = () => {
+const CreateAccountScreen = ({ route }) => {
     const [title, setTitle] = useState("");
     const [accountType, setAccountType] = useState(ACCOUNT_TYPE.PERSONAL);
     const [imageUri, setImageUri] = useState<string | null>(null);
@@ -27,19 +28,34 @@ const CreateAccountScreen = () => {
 
     const { t } = useTranslation();
 
+    const dispatch = useDispatch<any>();
+
+    const params = route.params;
+    const currentAccount: IAccount | undefined = params ? params.currentAccount : undefined;
+
+    // Update update initial account info in case of updating an account
+    useMemo(() => {
+        if (currentAccount) {
+            setTitle(currentAccount.title);
+            setAccountType(currentAccount.account_type);
+            setImageUri(currentAccount.imageUri);
+            setNote(currentAccount.note);
+        }
+    }, [currentAccount]);
+
 
     // Handle Create a new account
     const handleSubmit = async () => {
         const now = Date.now();
 
         const newAccount: IAccount = {
-            id: uuid.v4(),
+            id: currentAccount ? currentAccount.id : uuid.v4(),
             title,
             account_type: accountType,
             note,
             imageUri: null,
-            total: 0,
-            date_of_create: now,
+            total: currentAccount ? currentAccount.total : 0,
+            date_of_create: currentAccount ? currentAccount.date_of_create : now,
             last_update: now
         };
 
@@ -75,22 +91,15 @@ const CreateAccountScreen = () => {
         }
 
 
-        // Storing data
         try {
-            // Get prev Accounts data
-            const prevAccounts = await AsyncStorage.getItem("Accounts");
-            const Accounts: IAccount[] = prevAccounts ? JSON.parse(prevAccounts) : [];
 
-            // Prepare Accounts to store
-            Accounts.push(newAccount);
-
-            // Store Accounts to the store
-            await AsyncStorage.setItem("accounts", JSON.stringify(Accounts));
+            // Handle edit/create account
+            currentAccount ? await dispatch(editAccount(newAccount)) : await dispatch(createAccount(newAccount));
 
             // Show Success toast
             Toast.show({
                 type: 'success',
-                text2: t("create_Account_success_message")
+                text2: currentAccount ? t("edit_account_success_message") : t("create_Account_success_message")
             });
 
             // Redirect user to Account page
@@ -99,7 +108,7 @@ const CreateAccountScreen = () => {
         } catch (err) {
 
             // Show alert to user
-            alert(t("create_Account_error_message"));
+            currentAccount ? alert(t("edit_account_failed_message")) : alert(t("create_Account_error_message"));
         }
     };
 
@@ -121,13 +130,13 @@ const CreateAccountScreen = () => {
                     placeholderTextColor={VARIABLES.GRAY_COLOR}
                 />
 
+                {/* Disabled for the MVP */}
                 {/* -------------- Account type -------------- */}
-                <Text style={styles.title}>
+                {/* <Text style={styles.title}>
                     {t("account_type")}
                 </Text>
                 <View style={featuredStyles.btn_group_wrapper}>
 
-                    {/* Personal */}
                     <TouchableOpacity
                         style={accountType === ACCOUNT_TYPE.PERSONAL ? [featuredStyles.btn_group, featuredStyles.btn_group_active] : featuredStyles.btn_group}
                         onPress={() => setAccountType(ACCOUNT_TYPE.PERSONAL)}
@@ -137,7 +146,6 @@ const CreateAccountScreen = () => {
                         </Text>
                     </TouchableOpacity>
 
-                    {/* Shared */}
                     <TouchableOpacity
                         style={accountType === ACCOUNT_TYPE.SHARED ? [featuredStyles.btn_group, featuredStyles.btn_group_active] : featuredStyles.btn_group}
                         onPress={() => setAccountType(ACCOUNT_TYPE.SHARED)}
@@ -147,7 +155,7 @@ const CreateAccountScreen = () => {
                         </Text>
                     </TouchableOpacity>
 
-                </View>
+                </View> */}
 
 
                 {/* -------------- Avatar -------------- */}
@@ -176,19 +184,12 @@ const CreateAccountScreen = () => {
                     onPress={handleSubmit}
                     disabled={!title}
                 >
-                    <MainGradient borderRadius={5}>
-                        <View style={styles.create_new_account}>
-
-                            {/* Icon */}
-                            <Entypo name="plus" size={22} color={VARIABLES.WHITE_COLOR} />
-
-                            {/* Text */}
-                            <Text style={styles.add_new_text}>
-                                {t("add")}
-                            </Text>
-
-                        </View>
-                    </MainGradient>
+                    <MainActionButton
+                        text={currentAccount ? t("submit_changes") : t("add")}
+                        type='primary'
+                        icon={currentAccount ? null : <Entypo name="plus" size={22} color={VARIABLES.WHITE_COLOR} />}
+                        onPress={handleSubmit}
+                    />
                 </TouchableOpacity>
 
             </ScrollView>

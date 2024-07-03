@@ -61,6 +61,19 @@
     "delete_transaction": "حذف تراکنش",
     "delete_transaction_alert": "آیا مایل به حذف تراکنش هستید؟",
     "delete_transaction_message": "با حذف تراکنش تمامی اطلاعات مربوط به آن تراکنش هم حذف خواهد شد",
+    "delete_account_alert": "آیا مایل به حذف حساب هستید؟",
+    "delete_account_message": "با حذف حساب تمامی اطلاعات مربوط به آن حساب و تراکنش های آن هم حذف خواهد شد",
     "delete_transaction_failed": "مشکلی در حذف تراکنش بوجود آمده!",
-    "delete_transaction_success": "حذف تراکنش با موفقیت انجام شد"
+    "delete_transaction_success": "حذف تراکنش با موفقیت انجام شد",
+    "create_Account_success_message": "ساخت اکانت با موفقیت انجام شد",
+    "create_Account_error_message": "مشکلی در ساخت اکانت بوجود آمده!",
+    "account_not_found_by_filter": "هیچ حسابی با این فیلتر وجود ندارد!",
+    "account_not_found": "هنوز هیچ حسابی ساخته نشده!",
+    "account_detail": "جزئیات حساب",
+    "edit_account": "ویرایش حساب",
+    "edit_account_success_message": "ویرایش حساب با موفقیت انجام شد",
+    "edit_account_failed_message": "مشکلی در ویرایش حساب بوجود آمده!",
+    "delete_account": "حذف حساب",
+    "delete_account_success": "حذف حساب با موفقیت انجام شد",
+    "delete_account_failed": "مشکلی در حذف اکانت بوجود آمده!"
 }

@@ -19,7 +19,7 @@ import CustomText from '../../../components/Text';
 
 // Provides accounts review in Dashboard view
 const Review = () => {
-  const [projects, setProjects] = useState<IAccount[]>([]);
+  const [accounts, setAccounts] = useState<IAccount[]>([]);
 
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ const Review = () => {
 
   const { data, error, loading } = useSelector((store: IStore) => store.accounts);
 
-  // Fetch All projects
+  // Fetch All Accounts
   useFocusEffect(
     useCallback(() => {
       // @ts-ignore
@@ -35,12 +35,12 @@ const Review = () => {
     }, [])
   );
 
-  // Update initial Projects to show
+  // Update initial Accounts to show
   useMemo(() => {
-    data.length && setProjects(data);
+    data && setAccounts(data);
   }, [data]);
 
-  // Handle show error toast in case of Un-Successful loading projects
+  // Handle show error toast in case of Un-Successful loading Accounts
   useMemo(() => {
     error && Toast.show({
       type: "error",
@@ -68,15 +68,15 @@ const Review = () => {
 
           {/* --------- Lists ---------- */}
           <ScrollView contentContainerStyle={styles.wrapper}>
-            {projects.length ? (projects.map((singleProject, index) => (
+            {accounts.length ? (accounts.map((singleAccount, index) => (
               <Fragment key={index}>
-                <SingleCard projectData={singleProject} />
+                <SingleCard accountData={singleAccount} />
                 <MainDivider />
               </Fragment>
             ))) : (
               <View style={{ paddingTop: 20, alignItems: "center" }}>
                 <CustomText>
-                  {t("project_not_found")}
+                  {t("account_not_found")}
                 </CustomText>
               </View>
             )}

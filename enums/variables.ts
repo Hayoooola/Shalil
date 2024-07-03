@@ -11,7 +11,8 @@ enum VARIABLES {
     WHITE_COLOR = "#EDEFF6",
     PINK_COLOR = "#B990F8",
     RED_COLOR = "#ff758f",
-    BLACK_COLOR = "#191919"
+    BLACK_COLOR = "#191919",
+    WARNING = "#FFAF45"
 }
 
 export default VARIABLES;

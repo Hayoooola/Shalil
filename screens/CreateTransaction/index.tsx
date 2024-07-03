@@ -44,6 +44,7 @@ const CreateTransactionScreen = ({ route }) => {
 
     const params = route.params;
     const currentTransaction: ITransaction | undefined = params ? params.currentTransaction : undefined;
+    const accountData: IAccount | undefined = params ? params.accountData : undefined;
 
     const { data: allAccount, error } = useSelector((store: IStore) => store.accounts);
 
@@ -71,7 +72,8 @@ const CreateTransactionScreen = ({ route }) => {
         }
 
         (currentTransaction && allAccount) && setAccount(currentTransaction.account);
-    }, [currentTransaction, allAccount]);
+        (accountData && allAccount) && setAccount(accountData);
+    }, [currentTransaction, allAccount, accountData]);
 
     // Handle show error toast in case of Un-Successful loading Accounts
     useMemo(() => {
@@ -199,7 +201,7 @@ const CreateTransactionScreen = ({ route }) => {
                 await handleUpdateAccount();
 
                 // Redirect user to Transaction page
-                navigation.navigate(t("transactions"));
+                accountData ? navigation.navigate(t("account_detail"), { accountData }) : navigation.navigate(t("transactions"));
 
             } catch (err) {
 

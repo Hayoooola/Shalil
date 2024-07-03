@@ -1,78 +1,94 @@
 import { FC } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import moment from 'jalali-moment';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../../../features/styles';
+import IAccount from '../../../../interfaces/accounts';
 import VARIABLES from '../../../../enums/variables';
-import IProject from '../../../../interfaces/accounts';
 import ACCOUNT_TYPE from '../../../../enums/account_type';
 
 interface IProps {
-    projectData: IProject;
+    accountData: IAccount;
 }
 
 
 // Provides single-account to review section in Dashboard view
-const SingleCard: FC<IProps> = ({ projectData }) => {
+const SingleCard: FC<IProps> = ({ accountData }) => {
     const { t } = useTranslation();
+
+    const navigate = useNavigation<any>();
 
     // Handle find total Style
     const handleTotalStyle = () => (
-        projectData.total > 0 ? (styles.total_creditor) :
-            projectData.total < 0 ? (styles.total_debtor) :
+        accountData.total > 0 ? (styles.total_creditor) :
+            accountData.total < 0 ? (styles.total_debtor) :
                 styles.total_cleared
     );
 
     // Handle calculate and show total
     const handleCalculateTotal = () => (
-        projectData.total > 0 ? (`${(projectData.total).toLocaleString("fa")} ${t("currency")} +`) :
-            projectData.total < 0 ? (`${(Math.abs(projectData.total)).toLocaleString("fa")} ${t("currency")} -`) :
+        accountData.total > 0 ? (`${(accountData.total).toLocaleString("fa")} ${t("currency")} +`) :
+            accountData.total < 0 ? (`${(Math.abs(accountData.total)).toLocaleString("fa")} ${t("currency")} -`) :
                 t("square")
     );
 
+    // Handle Click on Action btn
+    const handleClick = () => navigate.navigate(t("account_detail"), { accountData });
+
 
     return (
-        <View style={styles.container}>
-            <View style={styles.wrapper}>
+        <TouchableOpacity onPress={handleClick}>
+            <View style={styles.container}>
+                <View style={styles.wrapper}>
 
-                {/* -------- Project-Avatar -------- */}
-                <View style={[styles.avatar_wrapper, featuredStyles.shadow]}>
-                    {projectData.imageUri ? (
-                        <Image source={{ uri: projectData.imageUri }} width={40} height={40} borderRadius={10} />
-                    ) : (
-                        projectData.account_type === ACCOUNT_TYPE.PERSONAL ? (
-                            <FontAwesome name="credit-card" size={22} color="white" />
+                    {/* -------- Account-Avatar -------- */}
+                    <View style={[styles.avatar_wrapper, featuredStyles.shadow]}>
+                        {accountData.imageUri ? (
+                            <Image source={{ uri: accountData.imageUri }} width={40} height={40} borderRadius={10} />
                         ) : (
-                            <MaterialCommunityIcons name="account-multiple-plus" size={32} color="white" />
-                        )
-                    )}
+                            accountData.account_type === ACCOUNT_TYPE.PERSONAL ? (
+                                <FontAwesome name="credit-card" size={22} color="white" />
+                            ) : (
+                                <MaterialCommunityIcons name="account-multiple-plus" size={32} color="white" />
+                            )
+                        )}
+                    </View>
+
+                    {/* -------- Content -------- */}
+                    <View style={{ flex: 1 }}>
+
+                        {/* Title */}
+                        <Text style={[styles.text, styles.title]} numberOfLines={2}>
+                            {accountData.title}
+                        </Text>
+
+                        {/* Account + Action_btn */}
+                        <View style={styles.total_wrapper}>
+                            {/* Total */}
+                            <Text style={[styles.text, styles.total, handleTotalStyle()]}>
+                                {handleCalculateTotal()}
+                            </Text>
+                            {/* Action_btn */}
+                            <TouchableOpacity onPress={handleClick}>
+                                <AntDesign name="linechart" size={24} color={VARIABLES.PRIMARY_COLOR_DARK} />
+                            </TouchableOpacity>
+                        </View>
+
+                        {/* Date */}
+                        <Text style={[styles.text, styles.date]}>
+                            {moment(accountData.last_update).locale("fa-IR").format('jYYYY/jMM/jD - HH:mm')}
+                        </Text>
+
+                    </View>
+
                 </View>
-
-                {/* -------- Content -------- */}
-                <View style={{ flex: 1 }}>
-
-                    {/* Title */}
-                    <Text style={[styles.text, styles.title]} numberOfLines={2}>
-                        {projectData.title}
-                    </Text>
-
-                    {/* Total */}
-                    <Text style={[styles.text, styles.total, handleTotalStyle()]}>
-                        {handleCalculateTotal()}
-                    </Text>
-
-                    {/* Date */}
-                    <Text style={[styles.text, styles.date]}>
-                        {moment(projectData.last_update).locale("fa-IR").format('jYYYY/jMM/jD - HH:mm')}
-                    </Text>
-
-                </View>
-
             </View>
-        </View>
+        </TouchableOpacity>
     );
 };
 export default SingleCard;
@@ -123,5 +139,10 @@ const styles = StyleSheet.create({
         fontSize: 13,
         color: VARIABLES.BLACK_COLOR,
         textAlign: "left"
+    },
+    total_wrapper: {
+        flexDirection: "row-reverse",
+        justifyContent: "space-between",
+        gap: 10,
     }
 });
