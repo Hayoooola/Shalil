@@ -1,5 +1,5 @@
 import { FC, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -120,10 +120,12 @@ const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
 
     return (
         <View style={{ flex: 1 }}>
+            <StatusBar hidden={true} />
+
             <ScrollView style={styles.container}>
 
                 {/* -------------- Title -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {t("title")}
                 </Text>
                 <TextInput
@@ -172,7 +174,7 @@ const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
 
 
                 {/* -------------- Note -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {t("note")}
                 </Text>
                 <TextInput
@@ -208,13 +210,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 25,
         paddingVertical: 15
-    },
-    title: {
-        fontFamily: "vazir",
-        fontSize: 18,
-        paddingHorizontal: 5,
-        marginTop: 15,
-        textAlign: "right"
     },
     note: {
         height: 96

@@ -20,13 +20,13 @@ const featuredStyles = StyleSheet.create({
         fontSize: 14
     },
     shadow: {
-        elevation: 5,
+        elevation: 3,
         shadowColor: "#333",
         shadowOffset: {
-            height: 5,
-            width: 5
+            height: 3,
+            width: 3
         },
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.3,
         shadowRadius: 5
     },
     screen_container: {
@@ -67,6 +67,25 @@ const featuredStyles = StyleSheet.create({
         fontSize: 18,
         color: VARIABLES.PRIMARY_COLOR_DARK
     },
+    title: {
+        fontFamily: "vazir",
+        fontSize: 18,
+        paddingHorizontal: 5,
+        marginTop: 15,
+        textAlign: "right"
+    },
+    centering: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    divider: {
+        height: 1,
+        width: "100%",
+        backgroundColor: VARIABLES.GRAY_COLOR_LIGHT,
+        marginVertical: 5
+    }
 });
 
 export default featuredStyles;

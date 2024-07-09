@@ -2,15 +2,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useTranslation } from 'react-i18next';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { Platform } from 'react-native';
 import 'intl-pluralrules';
 
+import SettingsScreen from '../../screens/‌Settings';
 import DashboardScreen from '../../screens/Dashboard';
 import TransactionsScreen from '../../screens/Transactions';
-import CalendarScreen from '../../screens/Calendar';
 import AccountsScreen from '../../screens/Accounts';
-import VARIABLES from '../../enums/variables';
 import MainGradient from '../Gradient';
+import VARIABLES from '../../enums/variables';
 
 
 const TabNavigation = () => {
@@ -43,11 +44,11 @@ const TabNavigation = () => {
             initialRouteName={t("dashboard")}
         >
             <Tab.Screen
-                name={t("calendar")}
-                component={CalendarScreen}
+                name={t("settings")}
+                component={SettingsScreen}
                 options={{
                     tabBarIcon: ({ focused }) => (
-                        <AntDesign name="calendar" size={focused ? 42 : 32} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />
+                        <Ionicons name="settings-sharp" size={24} color={focused ? "#fff" : VARIABLES.GRAY_COLOR_LIGHT} />
                     ),
                 }}
             />

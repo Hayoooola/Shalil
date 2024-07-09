@@ -249,7 +249,7 @@ const CreateTransactionScreen = ({ route }) => {
             <ScrollView style={styles.container}>
 
                 {/* -------------- Value -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {`${t("value")} (${t("currency")})`}
                 </Text>
                 <TextInput
@@ -261,7 +261,7 @@ const CreateTransactionScreen = ({ route }) => {
                 />
 
                 {/* -------------- Transaction type -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {t("transaction_type")}
                 </Text>
                 <View style={featuredStyles.btn_group_wrapper}>
@@ -289,19 +289,19 @@ const CreateTransactionScreen = ({ route }) => {
                 </View>
 
                 {/* -------------- Select_Account -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {t("select_account")}
                 </Text>
                 <SelectAccount account={account} setAccount={setAccount} accounts={accounts} />
 
                 {/* -------------- Date picker -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {t("select_date")}
                 </Text>
                 <MainDatePicker date={date} setDate={setDate} />
 
                 {/* -------------- Note -------------- */}
-                <Text style={styles.title}>
+                <Text style={featuredStyles.title}>
                     {t("note")}
                 </Text>
                 <TextInput
@@ -337,13 +337,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 25,
         paddingBottom: 20
-    },
-    title: {
-        fontFamily: "vazir",
-        fontSize: 18,
-        paddingHorizontal: 5,
-        marginTop: 20,
-        textAlign: "right"
     },
     note: {
         height: 96

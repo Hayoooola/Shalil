@@ -1,11 +1,11 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import * as ImagePicker from 'expo-image-picker';
-import { Menu, MenuItem, MenuDivider } from 'react-native-material-menu';
+import { Menu, MenuOptions, MenuOption, MenuTrigger, } from 'react-native-popup-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import featuredStyles from '../../../features/styles';
@@ -22,13 +22,7 @@ interface IProps {
 
 // Provide Avatar to create_new_account screen
 const Avatar: FC<IProps> = ({ accountType, imageUri, setImageUri }) => {
-    const [isSelectImageModalOpen, setIsSelectImageModalOpen] = useState(false);
-
     const { t } = useTranslation();
-
-    // Handle open & close select-image-menu
-    const hideMenu = () => setIsSelectImageModalOpen(false);
-    const showMenu = () => setIsSelectImageModalOpen(true);
 
     // Handle take a photo
     const handleTakePhoto = async () => {
@@ -38,7 +32,8 @@ const Avatar: FC<IProps> = ({ accountType, imageUri, setImageUri }) => {
             if (granted) {
                 const result = await ImagePicker.launchCameraAsync({
                     mediaTypes: ImagePicker.MediaTypeOptions.All,
-                    allowsEditing: true,
+                    allowsEditing: Platform.OS === "android" ? true : false,
+                    aspect: undefined,
                     quality: 1,
                 });
 
@@ -51,12 +46,9 @@ const Avatar: FC<IProps> = ({ accountType, imageUri, setImageUri }) => {
         } catch (err) {
 
             setImageUri(null);
-        } finally {
 
-            hideMenu();
         }
     };
-
 
     // Handle pick an image
     const handlePickImage = async () => {
@@ -64,7 +56,8 @@ const Avatar: FC<IProps> = ({ accountType, imageUri, setImageUri }) => {
             // No permissions request is necessary for launching the image library
             const result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
+                allowsEditing: Platform.OS === "android" ? true : false,
+                aspect: undefined,
                 quality: 1,
             });
 
@@ -72,9 +65,7 @@ const Avatar: FC<IProps> = ({ accountType, imageUri, setImageUri }) => {
         } catch (err) {
 
             setImageUri(null);
-        } finally {
 
-            hideMenu();
         }
     };
 
@@ -111,54 +102,51 @@ const Avatar: FC<IProps> = ({ accountType, imageUri, setImageUri }) => {
             </View>
 
             {/* ----------------- Select-image-menu ----------------- */}
-            <Menu
-                visible={isSelectImageModalOpen}
-                anchor={
-                    <TouchableOpacity onPress={showMenu}>
-                        <View style={styles.select_image_wrapper}>
-                            <Text style={featuredStyles.text}>
-                                {t("select_image")}
-                            </Text>
-                            <MaterialIcons name="add-a-photo" size={32} color={VARIABLES.GRAY_COLOR} />
-                        </View>
-                    </TouchableOpacity>
-                }
-                onRequestClose={hideMenu}
-            >
+            <Menu>
+                <MenuTrigger children={
+                    <View style={styles.select_image_wrapper}>
+                        <MaterialIcons name="add-a-photo" size={28} color={VARIABLES.GRAY_COLOR} />
+                    </View>
+                } />
 
                 {/* pick_an_image */}
-                <MenuItem onPress={handlePickImage}  >
-                    <View style={styles.menu_item}>
-                        <View>
-                            <Text style={styles.menu_item_text}>
-                                {t("pick_an_image")}
-                            </Text>
-                        </View>
-                        <View>
-                            <MaterialIcons name="photo" size={24} color={VARIABLES.PRIMARY_COLOR_DARK} />
-                        </View>
-                    </View>
-                </MenuItem>
+                <MenuOptions>
+                    <MenuOption
+                        onSelect={handlePickImage}
+                        children={
+                            <View style={styles.menu_item}>
+                                <View>
+                                    <Text style={styles.menu_item_text}>
+                                        {t("pick_an_image")}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <MaterialIcons name="photo" size={24} color={VARIABLES.PRIMARY_COLOR_DARK} />
+                                </View>
+                            </View>
+                        } />
 
-                {/* Divider */}
-                <MenuDivider />
+                    {/* Divider */}
+                    <View style={featuredStyles.divider} />
 
-                {/* take_a_photo */}
-                <MenuItem onPress={handleTakePhoto} >
-                    <View style={styles.menu_item}>
-                        <View>
-                            <Text style={styles.menu_item_text}>
-                                {t("take_a_photo")}
-                            </Text>
-                        </View>
-                        <View>
-                            <AntDesign name="camera" size={24} color={VARIABLES.PRIMARY_COLOR_DARK} />
-                        </View>
-                    </View>
-                </MenuItem>
+                    {/* take_a_photo */}
+                    <MenuOption
+                        onSelect={handleTakePhoto}
+                        children={
+                            <View style={styles.menu_item}>
+                                <View>
+                                    <Text style={styles.menu_item_text}>
+                                        {t("take_a_photo")}
+                                    </Text>
+                                </View>
+                                <View>
+                                    <AntDesign name="camera" size={24} color={VARIABLES.PRIMARY_COLOR_DARK} />
+                                </View>
+                            </View>
+                        } />
+
+                </MenuOptions>
             </Menu>
-
-
 
         </View>
     );
@@ -188,6 +176,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         gap: 10,
         alignItems: "center",
+        justifyContent: "center"
     },
     menu_item_text: {
         fontFamily: "vazir",

@@ -1,11 +1,10 @@
-import { Dispatch, FC, SetStateAction, useState } from 'react';
-import { Image, Modal, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { Image, Platform, StyleSheet, Text, View } from 'react-native';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import * as ImagePicker from 'expo-image-picker';
 import { Menu, MenuOptions, MenuOption, MenuTrigger, } from 'react-native-popup-menu';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { useTranslation } from 'react-i18next';
 
 import featuredStyles from '../../../features/styles';
@@ -18,10 +17,8 @@ interface IProps {
 }
 
 
-// Add receipt image to create_new_transaction screen
-const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
-    const [isImageFullSize, setIsImageFullSize] = useState(false);
-
+// Show user's Avatar in settings screen
+const UsersAvatar: FC<IProps> = ({ imageUri, setImageUri }) => {
     const { t } = useTranslation();
 
     // Handle take a photo
@@ -70,46 +67,22 @@ const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
     };
 
 
-    // Handle remove image
-    const handleRemoveImage = () => setImageUri(null);
-
-    // Handle full_screen image
-    const handleOpenFullScreenMode = () => setIsImageFullSize(true);
-    const handleCloseFullScreenMode = () => setIsImageFullSize(false);
-
-
 
     return (
-        <View style={styles.avatar_wrapper}>
+        <View>
 
-            {/* ----------------- Image ----------------- */}
-            {imageUri ? (
-                <View style={[styles.avatar, featuredStyles.shadow]}>
-                    <View>
-
-                        {/* ----- Image ----- */}
-                        <Image source={{ uri: imageUri }} height={264} width={264} />
-
-                        {/* ----- Cancel_btn ----- */}
-                        <View style={styles.cancel_btn_wrapper}>
-                            <TouchableOpacity onPress={handleRemoveImage}>
-                                <Ionicons name="close-circle" size={28} color={VARIABLES.PRIMARY_COLOR_DARK} />
-                            </TouchableOpacity>
-                        </View>
-
-
-                        {/* ----- Zoom_btn ----- */}
-                        <View style={styles.zoom_btn_wrapper}>
-                            <TouchableOpacity onPress={handleOpenFullScreenMode}>
-                                <MaterialCommunityIcons name="magnify-expand" size={30} color={VARIABLES.WHITE_COLOR} />
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
+            {/* ----------------- User's Avatar ----------------- */}
+            <View style={featuredStyles.centering}>
+                <View style={[styles.avatar_wrapper, featuredStyles.shadow]}>
+                    {imageUri ? (
+                        <Image source={{ uri: imageUri }} width={120} height={120} borderRadius={120} />
+                    ) : (
+                        <Ionicons name="person-sharp" size={70} color="white" />)
+                    }
                 </View>
-            ) : null}
+            </View>
 
-            {/* ----------------- Select-image-menu ----------------- */}
+            {/* ----------------- Change_image menu ----------------- */}
             <Menu>
                 <MenuTrigger children={
                     <View style={styles.select_image_wrapper}>
@@ -155,87 +128,37 @@ const AddReceiptImage: FC<IProps> = ({ imageUri, setImageUri }) => {
 
                 </MenuOptions>
             </Menu>
-
-
-            {/* ----------------- Full_screen Image modal ----------------- */}
-            <Modal
-                animationType="slide"
-                transparent={true}
-                visible={isImageFullSize}
-            >
-                <View style={{ flex: 1, backgroundColor: "#fff" }}>
-
-                    {/* ----- Image ----- */}
-                    <Image
-                        source={{ uri: imageUri }}
-                        resizeMode="cover"
-                        style={styles.full_screen}
-                    />
-
-                    {/* ----- Cancel_btn ----- */}
-                    <View style={styles.full_screen_cancel_btn}>
-                        <TouchableOpacity onPress={handleCloseFullScreenMode}>
-                            <Ionicons name="close-circle" size={32} color={VARIABLES.PRIMARY_COLOR_DARK} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </Modal>
-
         </View>
     );
 };
-export default AddReceiptImage;
+export default UsersAvatar;
 
 const styles = StyleSheet.create({
     avatar_wrapper: {
-        justifyContent: "center",
+        width: 120,
+        height: 120,
+        backgroundColor: VARIABLES.PRIMARY_COLOR,
+        borderRadius: 120,
         alignItems: "center",
-        gap: 5,
-        paddingTop: 25,
-        width: "100%"
-    },
-    avatar: {
-        width: 264,
-        height: 264,
-        borderRadius: 10,
         justifyContent: "center",
-        alignItems: "center"
     },
     select_image_wrapper: {
         flexDirection: "column-reverse",
         justifyContent: "center",
         alignItems: "center",
+        paddingTop: 10
     },
     menu_item: {
         flex: 1,
         flexDirection: "row",
         gap: 10,
         alignItems: "center",
-        paddingHorizontal: 10,
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingHorizontal: 10
     },
     menu_item_text: {
         fontFamily: "vazir",
         fontSize: 13,
         textAlign: "right"
-    },
-    cancel_btn_wrapper: {
-        position: "absolute",
-        left: -14,
-        top: -14
-    },
-    zoom_btn_wrapper: {
-        position: "absolute",
-        right: 4,
-        top: 4,
-    },
-    full_screen: {
-        width: '100%',
-        height: '100%',
-    },
-    full_screen_cancel_btn: {
-        position: "absolute",
-        left: 15,
-        top: 15
     }
 });

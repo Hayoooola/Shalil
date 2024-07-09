@@ -27,7 +27,7 @@ export const fetchAccounts = createAsyncThunk(
 
 // Create new Accounts
 export const createAccount = createAsyncThunk(
-    "Accounts/fetchAccounts",
+    "Accounts/createAccount",
     async (params: IAccount, { rejectWithValue }) => {
         try {
             const storedAccounts = await AsyncStorage.getItem("accounts");
@@ -47,7 +47,7 @@ export const createAccount = createAsyncThunk(
 
 // Edit Accounts
 export const editAccount = createAsyncThunk(
-    "Accounts/fetchAccounts",
+    "Accounts/editAccounts",
     async (params: IAccount, { rejectWithValue }) => {
         try {
             const storedAccounts = await AsyncStorage.getItem("accounts");
@@ -56,8 +56,6 @@ export const editAccount = createAsyncThunk(
             const filteredAccount = allAccounts.filter(item => item.id !== params.id);
 
             const newAccounts = filteredAccount.concat(params);
-
-            console.log(allAccounts.length, filteredAccount.length, newAccounts.length, allAccounts.map(item => item.id), params.id);
 
             await AsyncStorage.setItem("accounts", JSON.stringify(newAccounts));
 
@@ -71,7 +69,7 @@ export const editAccount = createAsyncThunk(
 
 // Delete account
 export const deleteAccount = createAsyncThunk(
-    "Accounts/fetchAccounts",
+    "Accounts/deleteAccounts",
     async (params: IAccount, { rejectWithValue }) => {
         try {
             const storedAccounts = await AsyncStorage.getItem("accounts");

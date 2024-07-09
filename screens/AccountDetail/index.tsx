@@ -4,7 +4,6 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import { useTranslation } from 'react-i18next';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
 import featuredStyles from '../../features/styles';
@@ -89,7 +88,7 @@ const AccountDetailScreen = ({ route }) => {
                 setActiveFilter={setActiveFilter}
             />
 
-            {/* ---------- Transactions review ---------- */}
+            {/* ---------- Accounts review ---------- */}
             {loading ? (
                 <MainLoading />
             ) : (
