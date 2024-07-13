@@ -12,7 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AddReceiptImage from './add_receipt_image';
 import SelectAccount from './select_account';
-import MainDatePicker from '../../components/DatePicker';
+import SelectDate from './select_date';
 import MainActionButton from '../../components/ActionButton';
 import DeleteTransaction from './delete_btn';
 import { fetchAccounts } from '../../store/reducers/accounts';
@@ -34,7 +34,7 @@ const CreateTransactionScreen = ({ route }) => {
     const [account, setAccount] = useState<IAccountInTransaction | null>(null);
     const [imageUri, setImageUri] = useState<string | null>(null);
     const [note, setNote] = useState("");
-    const [date, setDate] = useState(moment(new Date()).locale("fa").format("YYYY/MM/DD"));
+    const [date, setDate] = useState(moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm"));
     const [accounts, setAccounts] = useState<IAccount[]>([]);
 
     const navigation = useNavigation<any>();
@@ -298,7 +298,7 @@ const CreateTransactionScreen = ({ route }) => {
                 <Text style={featuredStyles.title}>
                     {t("select_date")}
                 </Text>
-                <MainDatePicker date={date} setDate={setDate} />
+                <SelectDate date={date} setDate={setDate} />
 
                 {/* -------------- Note -------------- */}
                 <Text style={featuredStyles.title}>

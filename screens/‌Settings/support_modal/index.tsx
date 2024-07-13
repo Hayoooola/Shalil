@@ -41,7 +41,7 @@ const SupportModal: FC<IProps> = ({ isSupportModalOpen, setIsSupportModalOpen })
                     <Text style={[featuredStyles.title, styles.text, { paddingTop: 40 }]}>
                         {t("thanks")}
                     </Text >
-                    <Text style={[styles.text]}>
+                    <Text style={[featuredStyles.text, styles.text]}>
                         {t("app_support")}
                     </Text >
                 </ScrollView>
