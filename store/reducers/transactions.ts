@@ -88,6 +88,7 @@ export const deleteTransaction = createAsyncThunk(
         }
     }
 );
+
 // Delete transaction
 export const deleteAccountsTransaction = createAsyncThunk(
     "Accounts/deleteTransaction",
@@ -108,7 +109,25 @@ export const deleteAccountsTransaction = createAsyncThunk(
     }
 );
 
+export const monthTransactions = createAsyncThunk(
+    "Accounts/fetchTransactions",
+    async (params: string | number[] | undefined, { rejectWithValue }) => {
+        try {
+            const storedTransactions = await AsyncStorage.getItem("transactions");
+            const allTransactions = storedTransactions ? JSON.parse(storedTransactions) : [];
 
+            if (params) {
+                return allTransactions.filter(item => item.account.id === params);
+
+            } else {
+                return allTransactions;
+            }
+
+        } catch (err) {
+            return rejectWithValue("failed_to_load_data");
+        }
+    }
+);
 
 
 

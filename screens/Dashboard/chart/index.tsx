@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import moment from 'jalali-moment';
+import moment from 'moment-jalaali';
 
 const chartSrc = require("../../../assets/images/chart.png");
 

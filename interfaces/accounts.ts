@@ -7,6 +7,6 @@ export default interface IAccount {
     note: string | null;
     imageUri: string | null;
     total: number;
-    date_of_create: number;
-    last_update: number;
+    date_of_create: string;
+    last_update: string;
 }

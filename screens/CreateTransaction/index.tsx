@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
-import moment from 'jalali-moment';
+import moment from 'moment-jalaali';
 import Toast from 'react-native-toast-message';
 import uuid from 'react-native-uuid';
 import * as FileSystem from 'expo-file-system';
@@ -46,9 +46,9 @@ const CreateTransactionScreen = ({ route }) => {
     const createAccountObject: IAccount = {
         id: "-1",
         account_type: ACCOUNT_TYPE.PERSONAL,
-        date_of_create: Date.now(),
+        date_of_create: moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm"),
         imageUri: null,
-        last_update: Date.now(),
+        last_update: date,
         note: "",
         title: t("add_account"),
         total: 0
@@ -139,7 +139,7 @@ const CreateTransactionScreen = ({ route }) => {
 
         const updatedAccount: IAccount = {
             ...selectedAccount,
-            last_update: Date.now(),
+            last_update: moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm"),
             total: UpdateAccountTotal,
         };
 

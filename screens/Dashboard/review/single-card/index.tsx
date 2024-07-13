@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import moment from 'jalali-moment';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -81,7 +80,7 @@ const SingleCard: FC<IProps> = ({ accountData }) => {
 
                         {/* Date */}
                         <Text style={[styles.text, styles.date]}>
-                            {moment(accountData.last_update).locale("fa-IR").format('jYYYY/jMM/jD - HH:mm')}
+                            {accountData.last_update}
                         </Text>
 
                     </View>
