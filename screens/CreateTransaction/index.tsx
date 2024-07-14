@@ -155,7 +155,7 @@ const CreateTransactionScreen = ({ route }) => {
     const handleSubmit = async () => {
 
         if (handleCheckDataCompleteness()) {
-            const now = Date.now();
+            const now = moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm");
 
             const newTransaction: ITransaction = {
                 id: currentTransaction ? currentTransaction.id : uuid.v4(),
@@ -176,7 +176,7 @@ const CreateTransactionScreen = ({ route }) => {
                     const format = imageUri.split(".")[imageUri.split(".").length - 1];
 
                     // Generate a unique filename
-                    const filename = `${now}.${format}`;
+                    const filename = `${new Date()}.${format}`;
 
                     // Get a writeable directory on the device
                     const directory = await FileSystem.documentDirectory;
@@ -193,7 +193,6 @@ const CreateTransactionScreen = ({ route }) => {
                     newTransaction.imageUri = newImageUri;
 
                 } catch (err) {
-
                     // Show alert to user
                     alert(t("select_image_error_message"));
                 }

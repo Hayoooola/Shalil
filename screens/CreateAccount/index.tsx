@@ -73,7 +73,7 @@ const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
                 const format = imageUri.split(".")[imageUri.split(".").length - 1];
 
                 // Generate a unique filename
-                const filename = `${now}.${format}`;
+                const filename = `${Date.now()}.${format}`;
 
                 // Get a writeable directory on the device
                 const directory = await FileSystem.documentDirectory;
