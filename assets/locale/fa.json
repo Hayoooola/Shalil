@@ -95,5 +95,6 @@
     "name_error_msg": "نام نمی تواند خالی باشد!",
     "edit_profile_success": "پروفایل شما با موفقیت ویرایش شد",
     "edit_profile_failed": "مشکلی در ویرایش پروفایل شما بوجود آمده!",
-    "phone_support": "تماس با پشتیبانی"
+    "phone_support": "تماس با پشتیبانی",
+    "total": "تراز کل"
 }
