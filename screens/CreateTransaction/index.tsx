@@ -34,7 +34,7 @@ const CreateTransactionScreen = ({ route }) => {
     const [account, setAccount] = useState<IAccountInTransaction | null>(null);
     const [imageUri, setImageUri] = useState<string | null>(null);
     const [note, setNote] = useState("");
-    const [date, setDate] = useState(moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm"));
+    const [date, setDate] = useState(moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm"));
     const [accounts, setAccounts] = useState<IAccount[]>([]);
 
     const navigation = useNavigation<any>();
@@ -46,7 +46,7 @@ const CreateTransactionScreen = ({ route }) => {
     const createAccountObject: IAccount = {
         id: "-1",
         account_type: ACCOUNT_TYPE.PERSONAL,
-        date_of_create: moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm"),
+        date_of_create: moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm"),
         imageUri: null,
         last_update: date,
         note: "",
@@ -139,7 +139,7 @@ const CreateTransactionScreen = ({ route }) => {
 
         const updatedAccount: IAccount = {
             ...selectedAccount,
-            last_update: moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm"),
+            last_update: moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm"),
             total: UpdateAccountTotal,
         };
 

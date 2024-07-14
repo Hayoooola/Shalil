@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import moment from "moment-jalaali";
 
 import { ITransactionReducer } from "../../interfaces/store";
 import ITransaction from "../../interfaces/transactions";
+import TRANSACTION_TYPE from "../../enums/transaction_type";
 
 
 // ---------------------! Actions !--------------------- //
@@ -108,27 +110,6 @@ export const deleteAccountsTransaction = createAsyncThunk(
         }
     }
 );
-
-export const monthTransactions = createAsyncThunk(
-    "Accounts/fetchTransactions",
-    async (params: string | number[] | undefined, { rejectWithValue }) => {
-        try {
-            const storedTransactions = await AsyncStorage.getItem("transactions");
-            const allTransactions = storedTransactions ? JSON.parse(storedTransactions) : [];
-
-            if (params) {
-                return allTransactions.filter(item => item.account.id === params);
-
-            } else {
-                return allTransactions;
-            }
-
-        } catch (err) {
-            return rejectWithValue("failed_to_load_data");
-        }
-    }
-);
-
 
 
 // ---------------------! Reducers !--------------------- //

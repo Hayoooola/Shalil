@@ -1,11 +1,13 @@
 import IProject from "./accounts";
 import IProfile from "./profile";
+import ITotal from "./total";
 import ITransaction from "./transactions";
 
 export default interface IStore {
     accounts: IAccountReducer;
     transactions: ITransactionReducer;
     profile: IProfileReducer;
+    totalMonth: ITotalReducer;
 }
 
 export interface IAccountReducer {
@@ -24,4 +26,10 @@ export interface IProfileReducer {
     loading: boolean,
     error: null | string,
     data: IProfile;
+}
+
+export interface ITotalReducer {
+    loading: boolean,
+    error: null | string,
+    data: ITotal;
 }

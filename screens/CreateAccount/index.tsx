@@ -52,7 +52,7 @@ const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
 
     // Handle Create a new account
     const handleSubmit = async () => {
-        const now = moment(new Date()).locale("fa").format("YYYY/MM/DD_HH:mm");
+        const now = moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm");
 
         const newAccount: IAccount = {
             id: currentAccount ? currentAccount.id : uuid.v4(),
