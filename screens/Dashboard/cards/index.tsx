@@ -15,7 +15,7 @@ import VARIABLES from '../../../enums/variables';
 const Cards = () => {
     const [totalMonth, setTotalMonth] = useState<ITotal>(totalInitialValue);
 
-    const { data, loading } = useSelector((store: IStore) => store.totalMonth);
+    const { data } = useSelector((store: IStore) => store.totalMonth);
 
     const { t } = useTranslation();
 
@@ -47,7 +47,7 @@ const Cards = () => {
                 color={VARIABLES.SECONDARY_COLOR_DARK}
                 fontSize={15}
                 header={t("month_income")}
-                content={`+${(totalMonth.receipt).toLocaleString("fa")}`}
+                content={`${totalMonth.receipt ? "+" : ""} ${(totalMonth.receipt).toLocaleString("fa")}`}
             />
 
             {/* --------- Total --------- */}
@@ -63,7 +63,7 @@ const Cards = () => {
                 color={VARIABLES.RED_COLOR}
                 fontSize={15}
                 header={t("month_outcome")}
-                content={`-${(totalMonth.pay).toLocaleString("fa")}`}
+                content={`${totalMonth.pay ? "-" : ""} ${(totalMonth.pay).toLocaleString("fa")}`}
             />
 
         </View>

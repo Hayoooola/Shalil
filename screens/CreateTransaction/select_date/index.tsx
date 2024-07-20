@@ -17,7 +17,7 @@ const SelectDate: FC<IProps> = ({ date, setDate }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     // Handle open DatePickerModal
-    const handleOpen = () => setIsOpen(true);
+    const handleClick = () => setIsOpen(!isOpen);
 
 
     return (
@@ -29,7 +29,7 @@ const SelectDate: FC<IProps> = ({ date, setDate }) => {
                 </Text>
 
                 {/* Edit_btn */}
-                <TouchableOpacity onPress={handleOpen}>
+                <TouchableOpacity onPress={handleClick}>
                     <AntDesign name="edit" size={26} color={VARIABLES.PRIMARY_COLOR_DARK} />
                 </TouchableOpacity>
             </View>

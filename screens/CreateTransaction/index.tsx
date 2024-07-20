@@ -19,6 +19,7 @@ import { fetchAccounts } from '../../store/reducers/accounts';
 import { createNewTransaction, editTransaction } from '../../store/reducers/transactions';
 import featuredStyles from '../../features/styles';
 import handleConvertToNumber from '../../features/convert_to_number';
+import handleConvertPersianDigits from '../../features/convert_persian_digits';
 import ITransaction, { IAccountInTransaction } from '../../interfaces/transactions';
 import IStore from '../../interfaces/store';
 import IAccount from '../../interfaces/accounts';
@@ -229,8 +230,12 @@ const CreateTransactionScreen = ({ route }) => {
     // Handle change input
     const handleChange = (text) => {
         if (text) {
+
+            // Convert Persian digits to English digits (FOR IOS USERS)
+            const englishText = handleConvertPersianDigits(text);
+
             // Parse the input to a number
-            const numberValue = parseFloat(text.replace(/,/g, ''));
+            const numberValue = parseFloat(englishText.replace(/,/g, ''));
 
             // Format the number with thousand separator
             const formattedValue = numberValue.toLocaleString();
@@ -335,10 +340,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 25,
-        paddingBottom: 20
     },
     note: {
-        height: 96
+        height: 96,
     },
     create_new_Transaction_container: {
         marginTop: 20,
