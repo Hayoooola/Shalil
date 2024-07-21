@@ -1,10 +1,12 @@
 import { Dispatch, FC, SetStateAction } from "react";
-import { Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useTranslation } from "react-i18next";
 
 import featuredStyles from "../../../features/styles";
 import VARIABLES from "../../../enums/variables";
+
+const logo = require("../../../assets/images/logo-main.png");
 
 interface IProps {
     isSupportModalOpen: boolean;
@@ -26,12 +28,21 @@ const SupportModal: FC<IProps> = ({ isSupportModalOpen, setIsSupportModalOpen })
             <View style={styles.container}>
 
                 <ScrollView>
+
+
+                    {/* Texts */}
                     <Text style={[featuredStyles.title]}>
                         {t("dear_user")}
                     </Text >
                     <Text style={[featuredStyles.title, styles.text]}>
                         {`${t("thanks_user")}. ${t("support_msg")}:`}
                     </Text >
+
+                    {/* Logo */}
+                    <View style={featuredStyles.centering}>
+                        <Image source={logo} style={styles.logo} />
+                    </View>
+
                     <Text style={[featuredStyles.title, styles.phone]}>
                         {`${t("phone_support")}: ${t("phone_number")}`}
                     </Text >
@@ -65,6 +76,12 @@ const styles = StyleSheet.create({
         backgroundColor: "#fff",
         paddingTop: 60,
         paddingHorizontal: 20
+    },
+    logo: {
+        resizeMode: "contain",
+        width: 120,
+        height: 120,
+        marginTop: 25
     },
     cancelBtn: {
         position: "absolute",

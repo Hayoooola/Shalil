@@ -1,17 +1,19 @@
 import { useCallback, useMemo, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment-jalaali';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { fetchTransactions } from '../../../store/reducers/transactions';
+import MainLoading from '../../../components/Loading';
 import featuredStyles from '../../../features/styles';
 import ITransaction from '../../../interfaces/transactions';
 import IStore from '../../../interfaces/store';
 import TRANSACTION_TYPE from '../../../enums/transaction_type';
 import VARIABLES from '../../../enums/variables';
-import MainLoading from '../../../components/Loading';
+
+const logo = require("../../../assets/images/logo-border.png");
 
 // Handle calculate total
 const handleCalculateTotal = (transactions: ITransaction[]) => {
@@ -77,6 +79,11 @@ const Chart = () => {
     return (
         <View style={styles.container}>
 
+            {/* -------------- Logo -------------- */}
+            <View style={featuredStyles.centering}>
+                <Image source={logo} style={styles.logo} />
+            </View>
+
             {/* -------------- Today text -------------- */}
             <Text style={[featuredStyles.text, styles.date]}>
                 {`${t("today")} ${persianDate}`}
@@ -127,7 +134,12 @@ const styles = StyleSheet.create({
     total: {
         fontSize: 18,
         color: VARIABLES.GRAY_COLOR_DARK,
-        marginTop: 20,
+        marginTop: 10,
         marginBottom: -5
-    }
+    },
+    logo: {
+        resizeMode: "contain",
+        width: 86,
+        height: 86,
+    },
 });
