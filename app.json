@@ -25,7 +25,8 @@
       },
       "permissions": [
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.hayoooola.Shalil"
     },
     "web": {
       "favicon": "./assets/images/logo-border.png"
