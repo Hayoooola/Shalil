@@ -30,12 +30,15 @@ This folder provides Media (contains Images, fonts, videos, language_files ...) 
 
 
 ### local run
-First, install necessary packages:
+First, install the dependencies:
+
 ```bash
-npm instal
+npm install
+``````
 
 Then, run the development server (you can see changes online):
 ```bash
-npm run start
+npm start
+``````
 
 # You need an emulator (e.g. Android Studio) or a simulator (e.g. X-code simulator) or you can install *Expo go* application on your phone and run the server:
