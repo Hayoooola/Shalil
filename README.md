@@ -1,8 +1,10 @@
 # Shalil application Developed by React Native & Expo
-![Screenshot of the app](./assets/images/IMG_2781.PNG)
-![Screenshot of the app](./assets/images/IMG_2782.PNG)
-![Screenshot of the app](./assets/images/IMG_2783.PNG)
-![Screenshot of the app](./assets/images/IMG_2784.PNG)
+<p align="center">
+  <img src="./assets/images/IMG_2781.PNG" alt="Screenshot 1" width="200"/>
+  <img src="./assets/images/IMG_2782.PNG" alt="Screenshot 2" width="200"/>
+  <img src="./assets/images/IMG_2783.PNG" alt="Screenshot 3" width="200"/>
+  <img src="./assets/images/IMG_2784.PNG" alt="Screenshot 4" width="200"/>
+</p>
 
 
 ## Application summery
