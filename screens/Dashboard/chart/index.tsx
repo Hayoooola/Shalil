@@ -98,7 +98,7 @@ const Chart = () => {
                         {`${t("total")}:`}
                     </Text>
                     <Text style={[featuredStyles.text, styles.total, { color: handleFindColor() }]}>
-                        {total.toLocaleString("fa")}
+                        {`${total > 0 ? "+" : total < 0 ? "-" : ""}${total.toLocaleString("fa")}`}
                     </Text>
                     <Text style={[featuredStyles.text, styles.total]}>
                         {t("currency")}

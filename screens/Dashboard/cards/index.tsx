@@ -55,7 +55,7 @@ const Cards = () => {
                 color={VARIABLES.PRIMARY_COLOR_DARK}
                 fontSize={17}
                 header={t("month_total")}
-                content={`${(totalMonth.total).toLocaleString("fa")}`}
+                content={`${totalMonth.total > 0 ? "+" : ""}${(totalMonth.total).toLocaleString("fa")}`}
             />
 
             {/* --------- Outcome --------- */}
