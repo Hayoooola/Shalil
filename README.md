@@ -39,9 +39,10 @@ This folder provides Media (contains Images, fonts, videos, language_files ...) 
 First, install necessary packages:
 ```bash
 npm instal
+```
 
 Then, run the development server (you can see changes online):
 ```bash
 npm run start
-
-# You need an emulator (e.g. Android Studio) or a simulator (e.g. X-code simulator) or you can install *Expo go* application on your phone and run the server:
+```
+#### You need an emulator (e.g. Android Studio) or a simulator (e.g. X-code simulator) or you can install *Expo go* application on your phone and run the server:
