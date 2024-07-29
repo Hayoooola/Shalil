@@ -34,7 +34,7 @@ const featuredStyles = StyleSheet.create({
         paddingHorizontal: 20,
         display: "flex",
         alignItems: "center",
-        paddingTop: 60
+        paddingTop: 40
     },
     btn_group_wrapper: {
         flexDirection: "row-reverse",

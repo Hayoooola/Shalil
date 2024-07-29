@@ -7,7 +7,7 @@ export default interface ITransaction {
     type: TRANSACTION_TYPE;
     value: number;
     account: IAccountInTransaction;
-    date_of_create: number;
+    date_of_create: string;
     last_update: string;
     note?: string;
     imageUri?: string;

@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
-import moment from 'moment-jalaali';
+import moment from 'jalali-moment';
 import Toast from 'react-native-toast-message';
 import uuid from 'react-native-uuid';
 import * as FileSystem from 'expo-file-system';
@@ -35,7 +35,7 @@ const CreateTransactionScreen = ({ route }) => {
     const [account, setAccount] = useState<IAccountInTransaction | null>(null);
     const [imageUri, setImageUri] = useState<string | null>(null);
     const [note, setNote] = useState("");
-    const [date, setDate] = useState(moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm"));
+    const [date, setDate] = useState(moment(new Date()).locale("fa").format("jYYYY/jMM/jDD_HH:mm"));
     const [accounts, setAccounts] = useState<IAccount[]>([]);
 
     const navigation = useNavigation<any>();
@@ -47,7 +47,7 @@ const CreateTransactionScreen = ({ route }) => {
     const createAccountObject: IAccount = {
         id: "-1",
         account_type: ACCOUNT_TYPE.PERSONAL,
-        date_of_create: moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm"),
+        date_of_create: moment(new Date()).locale("fa").format("jYYYY/jMM/jDD_HH:mm"),
         imageUri: null,
         last_update: date,
         note: "",
@@ -140,7 +140,7 @@ const CreateTransactionScreen = ({ route }) => {
 
         const updatedAccount: IAccount = {
             ...selectedAccount,
-            last_update: moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm"),
+            last_update: moment(new Date()).locale("fa").format("jYYYY/jMM/jDD_HH:mm"),
             total: UpdateAccountTotal,
         };
 
@@ -156,7 +156,7 @@ const CreateTransactionScreen = ({ route }) => {
     const handleSubmit = async () => {
 
         if (handleCheckDataCompleteness()) {
-            const now = moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm");
+            const now = moment(new Date()).locale("fa").format("jYYYY/jMM/jDD_HH:mm");
 
             const newTransaction: ITransaction = {
                 id: currentTransaction ? currentTransaction.id : uuid.v4(),

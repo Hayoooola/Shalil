@@ -2,7 +2,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment-jalaali';
+import moment from 'jalali-moment';
 import { useFocusEffect } from '@react-navigation/native';
 
 import { fetchTransactions } from '../../../store/reducers/transactions';
@@ -47,7 +47,7 @@ const Chart = () => {
 
     const { t } = useTranslation();
 
-    const persianDate = moment().locale("fa-IR").format('jD jMMMM jYYYY');
+    const persianDate = moment().locale("fa").format('jD jMMMM jYYYY');
 
     const dispatch = useDispatch();
 
@@ -98,7 +98,7 @@ const Chart = () => {
                         {`${t("total")}:`}
                     </Text>
                     <Text style={[featuredStyles.text, styles.total, { color: handleFindColor() }]}>
-                        {`${total > 0 ? "+" : total < 0 ? "-" : ""}${total.toLocaleString("fa")}`}
+                        {`${total > 0 ? "+" : ""}${total.toLocaleString("fa")}`}
                     </Text>
                     <Text style={[featuredStyles.text, styles.total]}>
                         {t("currency")}

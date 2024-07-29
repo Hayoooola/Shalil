@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Entypo from '@expo/vector-icons/Entypo';
 import * as FileSystem from 'expo-file-system';
 import uuid from 'react-native-uuid';
-import moment from 'moment-jalaali';
+import moment from "jalali-moment";
 import { useTranslation } from 'react-i18next';
 import Toast from 'react-native-toast-message';
 
@@ -52,7 +52,7 @@ const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
 
     // Handle Create a new account
     const handleSubmit = async () => {
-        const now = moment(new Date()).locale("fa-IR").format("jYYYY/jMM/jDD_HH:mm");
+        const now = moment(new Date()).locale("fa").format("jYYYY/jMM/jDD_HH:mm");
 
         const newAccount: IAccount = {
             id: currentAccount ? currentAccount.id : uuid.v4(),
