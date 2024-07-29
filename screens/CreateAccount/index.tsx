@@ -167,11 +167,13 @@ const CreateAccountScreen: FC<IProps> = ({ route, onFinish }) => {
 
 
                 {/* -------------- Avatar -------------- */}
-                <Avatar
-                    accountType={accountType}
-                    imageUri={imageUri}
-                    setImageUri={setImageUri}
-                />
+                {onFinish ? null : (
+                    <Avatar
+                        accountType={accountType}
+                        imageUri={imageUri}
+                        setImageUri={setImageUri}
+                    />
+                )}
 
 
                 {/* -------------- Note -------------- */}
