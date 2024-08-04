@@ -1,8 +1,17 @@
 # Shalil application Developed by React Native & Expo
+<<<<<<< HEAD
 ![Screenshot of the app](./assets/images/IMG_2781.PNG)
 ![Screenshot of the app](./assets/images/IMG_2782.PNG)
 ![Screenshot of the app](./assets/images/IMG_2783.PNG)
 ![Screenshot of the app](./assets/images/IMG_2784.PNG)
+=======
+<p align="center">
+  <img src="./assets/images/IMG_2781.PNG" alt="Screenshot 1" width="200"/>
+  <img src="./assets/images/IMG_2782.PNG" alt="Screenshot 2" width="200"/>
+  <img src="./assets/images/IMG_2783.PNG" alt="Screenshot 3" width="200"/>
+  <img src="./assets/images/IMG_2784.PNG" alt="Screenshot 4" width="200"/>
+</p>
+>>>>>>> refs/remotes/origin/master
 
 
 ## Application summery
@@ -43,4 +52,8 @@ Then, run the development server (you can see changes online):
 ```bash
 npm run start
 ```
+<<<<<<< HEAD
 # You need an emulator (e.g. Android Studio) or a simulator (e.g. X-code simulator) or you can install *Expo go* application on your phone and run the server:
+=======
+#### You need an emulator (e.g. Android Studio) or a simulator (e.g. X-code simulator) or you can install *Expo go* application on your phone and run the server:
+>>>>>>> refs/remotes/origin/master
